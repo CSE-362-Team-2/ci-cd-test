@@ -1,5 +1,17 @@
-FROM node:18-alpine
+FROM node:20-alpine AS builder
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
 WORKDIR /app
-COPY app.js .
+COPY package.json pnpm-lock.yaml* ./
+RUN pnpm install --frozen-lockfile
+COPY . .
+RUN pnpm run build
+
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+RUN sed -i 's/listen       80;/listen       8000;/g' /etc/nginx/conf.d/default.conf
+
 EXPOSE 8000
-CMD ["node", "app.js"]
+
+CMD ["nginx", "-g", "daemon off;"]
