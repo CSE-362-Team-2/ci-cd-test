@@ -25,15 +25,20 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # Pull latest changes or clone if repo doesn't exist on VM
+            # Clone repo if it doesn't exist yet on VM, otherwise pull latest code
             if [ ! -d "my-app" ]; then
               git clone https://github.com/A7reus/ci-cd-test.git my-app
             fi
             cd my-app
             git pull origin main
 
-            # Rebuild and restart the Docker container
+            # Build new Docker image and prune build caches to save VM disk space
             docker build -t demo-app .
+
+            # Replace old running container
             docker stop demo-container || true
             docker rm demo-container || true
             docker run -d --name demo-container --restart unless-stopped -p 8000:8000 demo-app
+
+            # Clean up dangling images to keep your VM lightweight
+            docker image prune -f
