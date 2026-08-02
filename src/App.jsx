@@ -22,20 +22,29 @@ function App() {
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count - 1)}
-        >
-          Count is {count}
-        </button>
+        <div className="counter-container">
+          <button
+            type="button"
+            className="counter"
+          >
+            Count is {count}
+          </button>
+          <button
+            type="button"
+            className="counter"
+            onClick={() => setCount((count) => count + 1)}
+          >
+            +
+          </button>
+          <button
+            type="button"
+            className="counter"
+            onClick={() => setCount((count) => count - 1)}
+          >
+            -
+          </button>
+        </div>
+
       </section>
 
       <div className="ticks"></div>
