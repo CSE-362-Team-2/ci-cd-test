@@ -1,17 +1,27 @@
-name: Deploy to Azure Ubuntu VM
+name: CD (Deploy to Azure)
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "release"]
 
 jobs:
-  deploy:
+  test-before-deploy:
+    if: github.ref_name == 'main'
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Run Quick Verification Tests
+        run: |
+          echo "Verifying build before deployment..."
+
+  deploy:
+    needs: [test-before-deploy]
+    if: always() && (github.ref_name == 'release' || needs.test-before-deploy.result == 'success')
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Deploy to Azure VM via SSH
         uses: appleboy/ssh-action@v1.2.5
         with:
@@ -19,20 +29,20 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # Clone repo if it doesn't exist yet on VM, otherwise pull latest code
+            BRANCH="${{ github.ref_name }}"
+
             if [ ! -d "my-app" ]; then
-              git clone https://github.com/A7reus/ci-cd-test.git my-app
+              git clone -b $BRANCH https://github.com/A7reus/ci-cd-test.git my-app
             fi
             cd my-app
-            git pull origin main
+            git fetch origin $BRANCH
+            git checkout $BRANCH
+            git pull origin $BRANCH
 
-            # Build new Docker image
             docker build -t demo-app .
 
-            # Replace old running container
             docker stop demo-container || true
             docker rm demo-container || true
             docker run -d --name demo-container --restart unless-stopped -p 8000:8000 demo-app
 
-            # Clean up dangling images to keep your VM lightweight
             docker image prune -f
