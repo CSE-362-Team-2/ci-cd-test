@@ -1,4 +1,4 @@
-name: Deploy to Tailscale Arch VM
+name: Deploy to Azure Ubuntu VM
 
 on:
   push:
@@ -10,16 +10,9 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
 
-      - name: Connect to Tailscale
-        uses: tailscale/github-action@v4
-        with:
-          oauth-client-id: ${{ secrets.TAILSCALE_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TAILSCALE_OAUTH_SECRET }}
-          tags: tag:ci
-
-      - name: Deploy to Arch VM via SSH
+      - name: Deploy to Azure VM via SSH
         uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ secrets.SERVER_HOST }}
@@ -33,7 +26,7 @@ jobs:
             cd my-app
             git pull origin main
 
-            # Build new Docker image and prune build caches to save VM disk space
+            # Build new Docker image
             docker build -t demo-app .
 
             # Replace old running container
