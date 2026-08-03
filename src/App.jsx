@@ -22,11 +22,8 @@ function App() {
           </p>
         </div>
         <div className="counter-container">
-          <button
-            type="button"
-            className="counter"
-          >
-            Count is {count}
+          <button type="button" className="counter">
+            Count = {count}
           </button>
           <button
             type="button"
@@ -43,7 +40,6 @@ function App() {
             -
           </button>
         </div>
-
       </section>
 
       <div className="ticks"></div>
