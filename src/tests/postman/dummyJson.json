@@ -1,0 +1,3243 @@
+{
+	"info": {
+		"_postman_id": "fe4dcb00-3ed0-4179-8b34-0fb8fb94e7ed",
+		"name": "Mycollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "57155885",
+		"_collection_link": "https://2024dipta-6384523.postman.co/workspace/Dipta-13's-Workspace~875fe404-8507-499e-81ca-917ccaefcf49/collection/57155885-fe4dcb00-3ed0-4179-8b34-0fb8fb94e7ed?action=share&source=collection_link&creator=57155885"
+	},
+	"item": [
+		{
+			"name": "f1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const user = pm.response.json();",
+							"",
+							"pm.test(\"User ID should be 1\", function () {",
+							"    pm.expect(user.id).to.eql(1);",
+							"});",
+							"",
+							"pm.test(\"User has firstName\", function () {",
+							"    pm.expect(user).to.have.property(\"firstName\");",
+							"});",
+							"",
+							"pm.test(\"Email contains @\", function () {",
+							"    pm.expect(user.email).to.include(\"@\");",
+							"});",
+							"",
+							"console.log(user);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyjson.com/users/1",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is under 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const user = pm.response.json();",
+							"",
+							"pm.test(\"User ID exists\", function () {",
+							"    pm.expect(user).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"User has firstName\", function () {",
+							"    pm.expect(user).to.have.property(\"firstName\");",
+							"});",
+							"",
+							"pm.test(\"Email exists\", function () {",
+							"    pm.expect(user.email).to.include(\"@\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyjson.com/users/2",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const user = pm.response.json();",
+							"",
+							"pm.test(\"User ID exists\", function () {",
+							"    pm.expect(user).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"User has firstName\", function () {",
+							"    pm.expect(user).to.have.property(\"firstName\");",
+							"});",
+							"",
+							"pm.test(\"User has lastName\", function () {",
+							"    pm.expect(user).to.have.property(\"lastName\");",
+							"});",
+							"",
+							"pm.test(\"Response time under 3000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyjson.com/users/3",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"users",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const user = pm.response.json();",
+							"",
+							"",
+							"pm.test(\"ID exists\", function () {",
+							"    pm.expect(user).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Response time under 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyjson.com/users/4",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"users",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is under 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const user = pm.response.json();",
+							"",
+							"pm.test(\"User ID exists\", function () {",
+							"    pm.expect(user).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"User has firstName\", function () {",
+							"    pm.expect(user).to.have.property(\"firstName\");",
+							"});",
+							"",
+							"pm.test(\"Email exists\", function () {",
+							"    pm.expect(user.email).to.include(\"@\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyjson.com/users/5",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"users",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f6",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is under 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const user = pm.response.json();",
+							"",
+							"pm.test(\"User ID exists\", function () {",
+							"    pm.expect(user).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"User has firstName\", function () {",
+							"    pm.expect(user).to.have.property(\"firstName\");",
+							"});",
+							"",
+							"pm.test(\"Email exists\", function () {",
+							"    pm.expect(user.email).to.include(\"@\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyjson.com/users/6",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"users",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f7",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is under 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const user = pm.response.json();",
+							"",
+							"pm.test(\"User ID exists\", function () {",
+							"    pm.expect(user).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"User has firstName\", function () {",
+							"    pm.expect(user).to.have.property(\"firstName\");",
+							"});",
+							"",
+							"pm.test(\"Email exists\", function () {",
+							"    pm.expect(user.email).to.include(\"@\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyjson.com/users/7",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"users",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f8",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is under 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const user = pm.response.json();",
+							"",
+							"pm.test(\"User ID exists\", function () {",
+							"    pm.expect(user).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"User has firstName\", function () {",
+							"    pm.expect(user).to.have.property(\"firstName\");",
+							"});",
+							"",
+							"pm.test(\"Email exists\", function () {",
+							"    pm.expect(user.email).to.include(\"@\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyjson.com/users/8",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"users",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f9",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is under 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const user = pm.response.json();",
+							"",
+							"pm.test(\"User ID exists\", function () {",
+							"    pm.expect(user).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"User has firstName\", function () {",
+							"    pm.expect(user).to.have.property(\"firstName\");",
+							"});",
+							"",
+							"pm.test(\"Email exists\", function () {",
+							"    pm.expect(user.email).to.include(\"@\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyjson.com/users/9",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"users",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f10",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is under 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const user = pm.response.json();",
+							"",
+							"pm.test(\"User ID exists\", function () {",
+							"    pm.expect(user).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"User has firstName\", function () {",
+							"    pm.expect(user).to.have.property(\"firstName\");",
+							"});",
+							"",
+							"pm.test(\"Email exists\", function () {",
+							"    pm.expect(user.email).to.include(\"@\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyjson.com/users/10",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"users",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f11",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is under 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const user = pm.response.json();",
+							"",
+							"pm.test(\"User ID exists\", function () {",
+							"    pm.expect(user).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"User has firstName\", function () {",
+							"    pm.expect(user).to.have.property(\"firstName\");",
+							"});",
+							"",
+							"pm.test(\"Email exists\", function () {",
+							"    pm.expect(user.email).to.include(\"@\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyjson.com/users/11",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"users",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f12",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is under 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const user = pm.response.json();",
+							"",
+							"pm.test(\"User ID exists\", function () {",
+							"    pm.expect(user).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"User has firstName\", function () {",
+							"    pm.expect(user).to.have.property(\"firstName\");",
+							"});",
+							"",
+							"pm.test(\"Email exists\", function () {",
+							"    pm.expect(user.email).to.include(\"@\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyjson.com/users/12",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"users",
+						"12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f13",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"Product ID generated\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Title exists\", function () {",
+							"    pm.expect(productData.title).to.not.be.empty;",
+							"});",
+							"",
+							"pm.test(\"Price is number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"pm.test(\"Response time under 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\":\"Laptop\",\n    \"price\":1200\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/add",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f15",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"Product ID generated\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Title exists\", function () {",
+							"    pm.expect(productData.title).to.not.be.empty;",
+							"});",
+							"",
+							"pm.test(\"Price is number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"pm.test(\"Response time under 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\":\"Laptop\",\n    \"price\":1500\n}"
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/add",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f16",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"Product ID generated\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Title exists\", function () {",
+							"    pm.expect(productData.title).to.not.be.empty;",
+							"});",
+							"",
+							"pm.test(\"Price is number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"pm.test(\"Response time under 3000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\":\"Laptop MD \",\n    \"price\":1500\n}"
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/add",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f17",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"Product ID generated\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Title exists\", function () {",
+							"    pm.expect(productData.title).to.not.be.empty;",
+							"});",
+							"",
+							"pm.test(\"Price is number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"pm.test(\"Response time under 3000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\":\"Laptop FD \",\n    \"price\":1600\n}"
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/add",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f18",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"Product ID generated\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Title exists\", function () {",
+							"    pm.expect(productData.title).to.not.be.empty;",
+							"});",
+							"",
+							"pm.test(\"Price is number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"pm.test(\"Response time under 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\":\"Laptop FD \",\n    \"price\":1600\n}"
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/add",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f19",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Product created - ID exists\", function () {",
+							"    const data = pm.response.json();",
+							"    pm.expect(data).to.have.property(\"id\");",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"Product ID generated\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Title exists\", function () {",
+							"    pm.expect(productData.title).to.not.be.empty;",
+							"});",
+							"",
+							"pm.test(\"Price is number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"pm.test(\"Response time under 3000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Laptop\",\n  \"price\": 1200\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/add",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f20",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Product created - ID exists\", function () {",
+							"    const data = pm.response.json();",
+							"    pm.expect(data).to.have.property(\"id\");",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"Product ID generated\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Title exists\", function () {",
+							"    pm.expect(productData.title).to.not.be.empty;",
+							"});",
+							"",
+							"pm.test(\"Price is number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"pm.test(\"Response time under 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Laptop\",\n  \"price\": 1200\n}"
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/add",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f21",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Product created - ID exists\", function () {",
+							"    const data = pm.response.json();",
+							"    pm.expect(data).to.have.property(\"id\");",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"Product ID generated\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Title exists\", function () {",
+							"    pm.expect(productData.title).to.not.be.empty;",
+							"});",
+							"",
+							"pm.test(\"Price is number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"pm.test(\"Response time under 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\":\"Laptop\",\n    \"price\":1200\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/add",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f23",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Response time is under 3000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);",
+							"});",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Title exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"title\");",
+							"});",
+							"",
+							"pm.test(\"Price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"",
+							"pm.test(\"Title updated correctly\", function () {",
+							"    pm.expect(productData.title).to.eql(\"Updated Laptop\");",
+							"});",
+							"",
+							"pm.test(\"Price updated correctly\", function () {",
+							"    pm.expect(productData.price).to.eql(2500);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Updated Laptop\",\n    \"price\": 2500\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/1",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f24",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Product title exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"title\");",
+							"});",
+							"",
+							"pm.test(\"Product price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"console.log(\"Updated Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Wireless Mouse\",\n    \"price\": 40\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/2",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f25",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Product title exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"title\");",
+							"});",
+							"",
+							"pm.test(\"Product price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"console.log(\"Updated Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Mechanical Keyboard\",\n    \"price\": 120\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/3",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f26",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Product title exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"title\");",
+							"});",
+							"",
+							"pm.test(\"Product price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"console.log(\"Updated Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Gaming Monitor\",\n    \"price\": 350\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/4",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f27",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Product title exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"title\");",
+							"});",
+							"",
+							"pm.test(\"Product price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"console.log(\"Updated Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Gaming Monitor\",\n    \"price\": 350\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/5",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f28",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Product title exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"title\");",
+							"});",
+							"",
+							"pm.test(\"Product price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"console.log(\"Updated Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Bluetooth Speaker\",\n    \"price\": 90\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/6",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f29",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Product title exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"title\");",
+							"});",
+							"",
+							"pm.test(\"Product price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"console.log(\"Updated Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Smart Watch\",\n    \"price\": 220\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/7",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f30",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Product title exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"title\");",
+							"});",
+							"",
+							"pm.test(\"Product price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"console.log(\"Updated Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Webcam HD\",\n    \"price\": 75\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/8",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f31",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Product title exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"title\");",
+							"});",
+							"",
+							"pm.test(\"Product price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"console.log(\"Updated Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"External SSD\",\n    \"price\": 180\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/9",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f32",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Product title exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"title\");",
+							"});",
+							"",
+							"pm.test(\"Product price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"console.log(\"Updated Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Noise Cancelling Headphones\",\n    \"price\": 280\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/10",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f33",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"pm.test(\"Price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"console.log(\"Patched Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": 1000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/1",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f34",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"pm.test(\"Price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"console.log(\"Patched Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": 1100\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/2",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f35",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"pm.test(\"Price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"console.log(\"Patched Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": 1200\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/3",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f36",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const data = pm.response.json();",
+							"",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(data).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Price exists\", function () {",
+							"    pm.expect(data).to.have.property(\"price\");",
+							"});",
+							"",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(data.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"console.log(\"Patched Product:\", data);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": 1300\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/4",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f37",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"const productData = pm.response.json();",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"pm.test(\"Price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"console.log(\"Patched Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": 1400\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/5",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f38",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"pm.test(\"Price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"console.log(\"Patched Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": 1500\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/6",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f39",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"pm.test(\"Price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"console.log(\"Patched Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": 1600\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/7",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f40",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"pm.test(\"Price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"console.log(\"Patched Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": 1700\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/8",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f41",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"pm.test(\"Price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"console.log(\"Patched Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": 1800\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/9",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f42",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"pm.test(\"Price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"console.log(\"Patched Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": 1900\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/10",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f43",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"pm.test(\"Price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"console.log(\"Patched Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": 2000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/11",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f44",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"pm.test(\"Price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"console.log(\"Patched Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": 2100\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/12",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f45",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"pm.test(\"Product ID exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"pm.test(\"Price exists\", function () {",
+							"    pm.expect(productData).to.have.property(\"price\");",
+							"});",
+							"pm.test(\"Price is a number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"console.log(\"Patched Product:\", productData);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": 2200\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/13",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"13"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f46",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const user = pm.response.json();",
+							"",
+							"pm.test(\"Products array exists\", function () {",
+							"    pm.expect(user).to.have.property(\"products\");",
+							"});",
+							"",
+							"pm.test(\"Products is an array\", function () {",
+							"    pm.expect(user.products).to.be.an(\"array\");",
+							"});",
+							"",
+							"pm.test(\"At least one product returned\", function () {",
+							"    pm.expect(user.products.length).to.be.above(0);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyjson.com/products?limit=10",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f47",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const user = pm.response.json();",
+							"",
+							"pm.test(\"Products array exists\", function () {",
+							"    pm.expect(user).to.have.property(\"products\");",
+							"});",
+							"",
+							"pm.test(\"Products is an array\", function () {",
+							"    pm.expect(user.products).to.be.an(\"array\");",
+							"});",
+							"",
+							"pm.test(\"At least one product returned\", function () {",
+							"    pm.expect(user.products.length).to.be.above(0);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyjson.com/products?q=laptop",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "laptop"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f48",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const user = pm.response.json();",
+							"",
+							"pm.test(\"Users array exists\", function () {",
+							"    pm.expect(user).to.have.property(\"users\");",
+							"    pm.expect(user.users).to.be.an(\"array\");",
+							"});",
+							"",
+							"pm.test(\"At least one user returned\", function () {",
+							"    pm.expect(user.users.length).to.be.above(0);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyjson.com/users?limit=10&skip=20",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "skip",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f49",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"const data= pm.response.json();",
+							"",
+							"pm.test(\"Products array exists\", function () {",
+							"    pm.expect(data).to.have.property(\"products\");",
+							"});",
+							"",
+							"pm.test(\"Products is an array\", function () {",
+							"    pm.expect(data.products).to.be.an(\"array\");",
+							"});",
+							"",
+							"pm.test(\"At least one product returned\", function () {",
+							"    pm.expect(data.products.length).to.be.above(0);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyjson.com/products/category/smartphones?limit=5",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"category",
+						"smartphones"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f50",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function () {",
+							"    pm.response.to.be.json;",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dummyjson.com/users?limit=10&skip=20",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"users"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "skip",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f22",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"Product ID generated\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Title exists\", function () {",
+							"    pm.expect(productData.title).to.not.be.empty;",
+							"});",
+							"",
+							"pm.test(\"Price is number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"pm.test(\"Response time under 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Mac Book\",\n  \"price\": 1900\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/add",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "f51",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"const productData = pm.response.json();",
+							"",
+							"pm.test(\"Product ID generated\", function () {",
+							"    pm.expect(productData).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Title exists\", function () {",
+							"    pm.expect(productData.title).to.not.be.empty;",
+							"});",
+							"",
+							"pm.test(\"Price is number\", function () {",
+							"    pm.expect(productData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"pm.test(\"Response time under 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Mac\",\n  \"price\": 2000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dummyjson.com/products/add",
+					"protocol": "https",
+					"host": [
+						"dummyjson",
+						"com"
+					],
+					"path": [
+						"products",
+						"add"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
