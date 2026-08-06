@@ -7,18 +7,73 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Build outputs
 dist
 dist-ssr
+build
 *.local
+
+# Environment files
+.env
+.env.local
+.env.*.local
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+*.swp
+*.swo
+*~
+
+# Docker
+*.tar.gz
+*.tgz
+
+# Test results - Postman/Newman
+tests/maruf/postman/test-report.html
+tests/maruf/postman/*.html
+!tests/maruf/postman/*.postman_collection.json
+tests/maruf/postman/test-report-*.html
+tests/maruf/postman/*-report.html
+tests/maruf/postman/reports/
+
+# Test results - JMeter
+tests/maruf/jmeter/*.jtl
+tests/maruf/jmeter/html-report/
+tests/maruf/jmeter/html-report/
+tests/maruf/jmeter/*.html
+tests/maruf/jmeter/result*.jtl
+tests/maruf/jmeter/results/
+tests/maruf/jmeter/test-results/
+tests/maruf/jmeter/reports/
+tests/maruf/jmeter/*.log
+
+# Coverage reports
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+
+# OS specific
+Thumbs.db
+desktop.ini
+
+# Git
+.git/
