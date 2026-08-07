@@ -9,9 +9,6 @@ lerna-debug.log*
 
 # Dependencies
 node_modules
-package-lock.json
-pnpm-lock.yaml
-yarn.lock
 
 # Build outputs
 dist
@@ -43,23 +40,20 @@ build
 *.tgz
 
 # Test results - Postman/Newman
-tests/maruf/postman/test-report.html
-tests/maruf/postman/*.html
-!tests/maruf/postman/*.postman_collection.json
-tests/maruf/postman/test-report-*.html
-tests/maruf/postman/*-report.html
-tests/maruf/postman/reports/
+tests/*/postman/*.html
+tests/*/postman/test-report-*.html
+tests/*/postman/*-report.html
+tests/*/postman/reports/
 
 # Test results - JMeter
-tests/maruf/jmeter/*.jtl
-tests/maruf/jmeter/html-report/
-tests/maruf/jmeter/html-report/
-tests/maruf/jmeter/*.html
-tests/maruf/jmeter/result*.jtl
-tests/maruf/jmeter/results/
-tests/maruf/jmeter/test-results/
-tests/maruf/jmeter/reports/
-tests/maruf/jmeter/*.log
+tests/*/jmeter/*.jtl
+tests/*/jmeter/html-report/
+tests/*/jmeter/*.html
+tests/*/jmeter/result*.jtl
+tests/*/jmeter/results/
+tests/*/jmeter/test-results/
+tests/*/jmeter/reports/
+tests/*/jmeter/*.log
 
 # Coverage reports
 coverage/
@@ -74,6 +68,3 @@ temp/
 # OS specific
 Thumbs.db
 desktop.ini
-
-# Git
-.git/
