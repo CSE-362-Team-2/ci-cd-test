@@ -40,20 +40,20 @@ build
 *.tgz
 
 # Test results - Postman/Newman
-tests/*/postman/*.html
-tests/*/postman/test-report-*.html
-tests/*/postman/*-report.html
-tests/*/postman/reports/
+src/tests/postman/*.html
+src/tests/postman/test-report-*.html
+src/tests/postman/*-report.html
+src/tests/postman/reports/
 
 # Test results - JMeter
-tests/*/jmeter/*.jtl
-tests/*/jmeter/html-report/
-tests/*/jmeter/*.html
-tests/*/jmeter/result*.jtl
-tests/*/jmeter/results/
-tests/*/jmeter/test-results/
-tests/*/jmeter/reports/
-tests/*/jmeter/*.log
+tests/jmeter/*.jtl
+tests/jmeter/html-report/
+tests/jmeter/*.html
+tests/jmeter/result*.jtl
+tests/jmeter/results/
+tests/jmeter/test-results/
+tests/jmeter/reports/
+tests/jmeter/*.log
 
 # Coverage reports
 coverage/
