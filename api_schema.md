@@ -117,7 +117,7 @@ Example JSON request:
 Acceptance criteria:
 
 - `title` must be at least one character (UTF-8) long.
-- `body` is optional. It also be an empty string.
+- `body` is optional. It can also be an empty string.
 
 ## Ok Response
 
@@ -142,6 +142,50 @@ Example failed JSON response:
 }
 ```
 
+# Update draft Post
+
+## Request
+
+`PATCH /api/v1/update-draft-post`
+
+Example JSON request:
+```json
+{
+  "postId": "pjfsk242kj42jjl",
+  "title": "This is an undate title...",
+  "body": "Updated body...",
+}
+```
+
+Acceptance criteria:
+
+- `title` must be at least one character (UTF-8) long.
+- `body` is optional. It can also be an empty string.
+- Both `title` and `body` can be omitted if you don't want to modify the original title or body.
+- To set the body to a blank string, the `body` field should be set to an empty string ("");
+
+## Ok Response
+
+HTTP 201
+
+Example successful JSON response:
+```json
+{
+  "postId": "pjfsk242kj42jjl",
+}
+```
+
+## Err Response
+
+HTTP 400
+
+Example failed JSON response:
+```json
+{
+  "respCode": 103,
+  "respMsg": "Title must be at least one character long"
+}
+```
 
 # Attach file(s) to (draft/published) post
 
@@ -155,6 +199,8 @@ Example `POST` request:
 Acceptance criteria:
 
 - `postId` must be a valid postId of the current user.
+- `Content-Type` must be set to `multipart/form-data` and the file should be encoded as so.
+- The size must be set properly for the file and there is max file size limit of `512MiB`.
 
 ## Ok Response
 
@@ -209,6 +255,48 @@ Example failed JSON response:
 ```json
 {
   "respCode": 105,
+  "respMsg": "Invalid postId provided"
+}
+```
+
+# Remove attachment from a (draft/published) post
+
+## Request
+
+`POST /api/v1/remove-attachment`
+
+Example `JSON` request:
+```json
+{
+  "postId": "pjfsk242kj42jjl",
+  "fileId": "fjkjlafjlk22k"
+}
+```
+
+Acceptance criteria:
+
+- `postId` must be a valid postId of the current user.
+- `fileId` must be a valid fileId of a post that was created by the current user.
+
+## Ok Response
+
+HTTP 201
+
+Example successful JSON response:
+```json
+{
+  "postId": "pjfsk242kj42jjl",
+}
+```
+
+## Err Response
+
+HTTP 400
+
+Example failed JSON response:
+```json
+{
+  "respCode": 104,
   "respMsg": "Invalid postId provided"
 }
 ```
