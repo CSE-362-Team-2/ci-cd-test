@@ -301,3 +301,34 @@ Example failed JSON response:
 }
 ```
 
+# Delete (draft and published) post
+
+## Request
+
+`DELETE /api/v1/delete-post`
+
+Example JSON request:
+```json
+{
+  "postId": "pjfsk242kj42jjl"
+}
+```
+
+Acceptance criteria:
+
+- `postId` must be valid postId of the current user.
+
+## Ok Response
+
+HTTP 204
+
+## Err Response
+
+HTTP 404
+
+Example failed JSON response:
+```json
+{
+  "respCode": 106,
+  "respMsg": "File not found in the post"
+}
