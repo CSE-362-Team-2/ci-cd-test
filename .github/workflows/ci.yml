@@ -38,5 +38,5 @@ jobs:
       - name: Run Postman Collection with Newman
         run: |
           pnpm dlx newman run src/tests/postman/DummyJSON.json
+          pnpm dlx newman run src/tests/postman/JSONPlaceholder.json
           pnpm dlx newman run src/tests/postman/mockapi.json
-
