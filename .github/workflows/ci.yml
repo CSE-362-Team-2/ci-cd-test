@@ -39,3 +39,5 @@ jobs:
         run: |
           pnpm dlx newman run src/tests/postman/DummyJSON.json
           pnpm dlx newman run src/tests/postman/JSONPlaceholder.json
+          pnpm dlx newman run src/tests/postman/mockapi.json
+          pnpm dlx newman run src/tests/postman/FakeStoreAPI.json
