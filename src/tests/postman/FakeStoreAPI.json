@@ -1,0 +1,696 @@
+{
+  "info": {
+    "_postman_id": "4ffb31ff-aef9-4766-8000-f78b60fa427b",
+    "name": "50-tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "4651505"
+  },
+  "item": [
+    {
+      "name": "HTTP PUT",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code should be HTTP 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "var reqData = JSON.parse(pm.request.body.raw);",
+              "var resData = pm.response.json();",
+              "",
+              "pm.test(\"Response id matches request id\", function () {",
+              "    pm.expect(resData.id).to.eq(reqData.id);",
+              "});",
+              "",
+              "pm.test(\"Response title matches request title\", function () {",
+              "    pm.expect(resData.title).to.eq(reqData.title);",
+              "});",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 1,\n  \"title\": \"Mango (1 KG)\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://fakestoreapi.com/products/1",
+          "protocol": "https",
+          "host": [
+            "fakestoreapi",
+            "com"
+          ],
+          "path": [
+            "products",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "HTTP POST",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code should be HTTP 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "var reqData = JSON.parse(pm.request.body.raw);",
+              "var resData = pm.response.json();",
+              "",
+              "pm.test(\"Response title matches request title\", function () {",
+              "    pm.expect(resData.title).to.eq(reqData.title);",
+              "});",
+              "",
+              "pm.test(\"Response price matches request price\", function () {",
+              "    pm.expect(resData.price).to.eq(reqData.price);",
+              "});",
+              "",
+              "pm.test(\"Response description matches request description\", function () {",
+              "    pm.expect(resData.description).to.eq(reqData.description);",
+              "});",
+              "",
+              "pm.test(\"Response category matches request category\", function () {",
+              "    pm.expect(resData.category).to.eq(reqData.category);",
+              "});",
+              "",
+              "pm.test(\"Response image matches request image\", function () {",
+              "    pm.expect(resData.image).to.eq(reqData.image);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Mango\",\n  \"price\": 50,\n  \"description\": \"The ripest Mango grown organically in Bangladesh\",\n  \"category\": \"Fruits\",\n  \"image\": \"http://example.com\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://fakestoreapi.com/products",
+          "protocol": "https",
+          "host": [
+            "fakestoreapi",
+            "com"
+          ],
+          "path": [
+            "products"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "HTTP GET",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code should be HTTP 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response should have 20 products\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.length).to.eql(20);",
+              "});",
+              "",
+              "pm.test(\"Each product should have id field\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData[0].id).to.not.eq(null);",
+              "    pm.expect(jsonData[0].id).to.not.eq(undefined);",
+              "});",
+              "",
+              "pm.test(\"Each product should have id field of type number\", function () {",
+              "    var jsonData = pm.response.json();",
+              "",
+              "    pm.expect(typeof jsonData[0].id).to.eq(\"number\");",
+              "});",
+              "",
+              "pm.test(\"Each product should have title field\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData[0].title).to.not.eq(null);",
+              "    pm.expect(jsonData[0].title).to.not.eq(undefined);",
+              "});",
+              "",
+              "pm.test(\"Each product should have title field of type string\", function () {",
+              "    var jsonData = pm.response.json();",
+              "",
+              "    pm.expect(typeof jsonData[0].title).to.eq(\"string\");",
+              "});",
+              "",
+              "pm.test(\"Each product should have price field\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData[0].price).to.not.eq(null);",
+              "    pm.expect(jsonData[0].price).to.not.eq(undefined);",
+              "});",
+              "",
+              "pm.test(\"Each product should have price field of type number\", function () {",
+              "    var jsonData = pm.response.json();",
+              "",
+              "    pm.expect(typeof jsonData[0].price).to.eq(\"number\");",
+              "});",
+              "",
+              "pm.test(\"Each product should have description field\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData[0].description).to.not.eq(null);",
+              "    pm.expect(jsonData[0].description).to.not.eq(undefined);",
+              "});",
+              "",
+              "pm.test(\"Each product should have description field of type string\", function () {",
+              "    var jsonData = pm.response.json();",
+              "",
+              "    pm.expect(typeof jsonData[0].description).to.eq(\"string\");",
+              "});",
+              "",
+              "pm.test(\"Each product should have category field\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData[0].category).to.not.eq(null);",
+              "    pm.expect(jsonData[0].category).to.not.eq(undefined);",
+              "});",
+              "",
+              "pm.test(\"Each product should have category field of type string\", function () {",
+              "    var jsonData = pm.response.json();",
+              "",
+              "    pm.expect(typeof jsonData[0].category).to.eq(\"string\");",
+              "});",
+              "",
+              "pm.test(\"Each product should have image field\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData[0].image).to.not.eq(null);",
+              "    pm.expect(jsonData[0].image).to.not.eq(undefined);",
+              "});",
+              "",
+              "pm.test(\"Each product should have image field of type string\", function () {",
+              "    var jsonData = pm.response.json();",
+              "",
+              "    pm.expect(typeof jsonData[0].image).to.eq(\"string\");",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://fakestoreapi.com/products",
+          "protocol": "https",
+          "host": [
+            "fakestoreapi",
+            "com"
+          ],
+          "path": [
+            "products"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Invalid Schema HTTP POST",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code should be HTTP 400 for invalid request (schema invalid)\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Mango\",\n//   \"price\": 50,\n//   \"description\": \"The ripest Mango grown organically in Bangladesh\",\n//   \"category\": \"Fruits\",\n//   \"image\": \"http://example.com\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://fakestoreapi.com/products",
+          "protocol": "https",
+          "host": [
+            "fakestoreapi",
+            "com"
+          ],
+          "path": [
+            "products"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Non-existent product HTTP PUT",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code should be HTTP 400 for non-existent product\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "var resData = pm.response.json();",
+              "",
+              "pm.test(\"Response should have status field\", function () {",
+              "    pm.expect(resData.status).to.not.eq(null);",
+              "    pm.expect(resData.status).to.not.eq(undefined);",
+              "});",
+              "",
+              "pm.test(\"Response should have status field of type string\", function () {",
+              "    pm.expect(typeof resData.status).to.eq(\"string\");",
+              "});",
+              "",
+              "pm.test(\"Response should have message field\", function () {",
+              "    pm.expect(resData.message).to.not.eq(null);",
+              "    pm.expect(resData.message).to.not.eq(undefined);",
+              "});",
+              "",
+              "pm.test(\"Response should have message field\", function () {",
+              "    pm.expect(typeof resData.message).to.eq(\"string\");",
+              "});",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 1,\n  \"title\": \"Mango (1 KG)\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://fakestoreapi.com/products/mango",
+          "protocol": "https",
+          "host": [
+            "fakestoreapi",
+            "com"
+          ],
+          "path": [
+            "products",
+            "mango"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete product (HTTP DELETE)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code should be HTTP 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://fakestoreapi.com/products/25",
+          "protocol": "https",
+          "host": [
+            "fakestoreapi",
+            "com"
+          ],
+          "path": [
+            "products",
+            "25"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Invalid delete product request (HTTP DELETE)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response status code should be HTTP 400 for invalid request\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "https://fakestoreapi.com/products/mango",
+          "protocol": "https",
+          "host": [
+            "fakestoreapi",
+            "com"
+          ],
+          "path": [
+            "products",
+            "mango"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get cart info (HTTP GET)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response is an array\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an(\"array\");",
+              "});",
+              "",
+              "pm.test(\"Cart should have id field of type integer\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData[0].id).to.not.eq(null);",
+              "    pm.expect(jsonData[0].id).to.not.eq(undefined);",
+              "    pm.expect(typeof jsonData[0].id).to.eq(\"number\");",
+              "    pm.expect(Number.isInteger(jsonData[0].id)).to.be.true;",
+              "});",
+              "",
+              "pm.test(\"Cart should have userId field of type integer\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData[0].userId).to.not.eq(null);",
+              "    pm.expect(jsonData[0].userId).to.not.eq(undefined);",
+              "    pm.expect(typeof jsonData[0].userId).to.eq(\"number\");",
+              "    pm.expect(Number.isInteger(jsonData[0].userId)).to.be.true;",
+              "});",
+              "",
+              "pm.test(\"Cart should have date field of type string\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData[0].date).to.not.eq(null);",
+              "    pm.expect(jsonData[0].date).to.not.eq(undefined);",
+              "    pm.expect(typeof jsonData[0].date).to.eq(\"string\");",
+              "});",
+              "",
+              "pm.test(\"Cart should have products field of type array\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData[0].products).to.be.an(\"array\");",
+              "});",
+              "",
+              "pm.test(\"Cart should have __v field of type integer\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData[0].__v).to.not.eq(null);",
+              "    pm.expect(jsonData[0].__v).to.not.eq(undefined);",
+              "    pm.expect(typeof jsonData[0].__v).to.eq(\"number\");",
+              "    pm.expect(Number.isInteger(jsonData[0].__v)).to.be.true;",
+              "});",
+              "",
+              "pm.test(\"Product productId field should be integer\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(typeof jsonData[0].products[0].productId).to.eq(\"number\");",
+              "    pm.expect(Number.isInteger(jsonData[0].products[0].productId)).to.be.true;",
+              "});",
+              "",
+              "pm.test(\"Product quantity field should be integer\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(typeof jsonData[0].products[0].quantity).to.eq(\"number\");",
+              "    pm.expect(Number.isInteger(jsonData[0].products[0].quantity)).to.be.true;",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://fakestoreapi.com/carts",
+          "protocol": "https",
+          "host": [
+            "fakestoreapi",
+            "com"
+          ],
+          "path": [
+            "carts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get all users (HTTP GET)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Response is an array\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.be.an(\"array\");",
+              "});",
+              "",
+              "pm.test(\"User should have id field of type integer\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData[0].id).to.not.eq(null);",
+              "    pm.expect(jsonData[0].id).to.not.eq(undefined);",
+              "    pm.expect(typeof jsonData[0].id).to.eq(\"number\");",
+              "    pm.expect(Number.isInteger(jsonData[0].id)).to.be.true;",
+              "});",
+              "",
+              "pm.test(\"User should have username field of type string\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData[0].username).to.not.eq(null);",
+              "    pm.expect(jsonData[0].username).to.not.eq(undefined);",
+              "    pm.expect(typeof jsonData[0].username).to.eq(\"string\");",
+              "});",
+              "",
+              "pm.test(\"User should have email field of type string\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData[0].email).to.not.eq(null);",
+              "    pm.expect(jsonData[0].email).to.not.eq(undefined);",
+              "    pm.expect(typeof jsonData[0].email).to.eq(\"string\");",
+              "});",
+              "",
+              "pm.test(\"User should have password field of type string\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData[0].password).to.not.eq(null);",
+              "    pm.expect(jsonData[0].password).to.not.eq(undefined);",
+              "    pm.expect(typeof jsonData[0].password).to.eq(\"string\");",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://fakestoreapi.com/users",
+          "protocol": "https",
+          "host": [
+            "fakestoreapi",
+            "com"
+          ],
+          "path": [
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Failed user login (HTTP POST)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 401 for failed login request\", function () {",
+              "    pm.response.to.have.status(401);",
+              "});",
+              "",
+              "pm.test(\"Response body is typeof string\", function () {",
+              "    pm.expect(typeof pm.response.text()).to.eq(\"string\");",
+              "});",
+              "",
+              "pm.test(\"Response body matches login failed string\", function () {",
+              "    pm.expect(pm.response.text()).to.include(\"username or password is incorrect\");",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"string\",\n  \"password\": \"string\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://fakestoreapi.com/auth/login",
+          "protocol": "https",
+          "host": [
+            "fakestoreapi",
+            "com"
+          ],
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "User info update (HTTP PUT)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"User should have username field of type string\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.username).to.not.eq(null);",
+              "    pm.expect(jsonData.username).to.not.eq(undefined);",
+              "    pm.expect(typeof jsonData.username).to.eq(\"string\");",
+              "});",
+              "",
+              "pm.test(\"User should have email field of type string\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.email).to.not.eq(null);",
+              "    pm.expect(jsonData.email).to.not.eq(undefined);",
+              "    pm.expect(typeof jsonData.email).to.eq(\"string\");",
+              "});",
+              "",
+              "pm.test(\"User should have password field of type string\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.password).to.not.eq(null);",
+              "    pm.expect(jsonData.password).to.not.eq(undefined);",
+              "    pm.expect(typeof jsonData.password).to.eq(\"string\");",
+              "});",
+              "",
+              "pm.test(\"Response fields match request fields\", function () {",
+              "    var reqData = JSON.parse(pm.request.body.raw);",
+              "    var resData = pm.response.json();",
+              "",
+              "    pm.expect(resData.username).to.eq(reqData.username);",
+              "    pm.expect(resData.email).to.eq(reqData.email);",
+              "    pm.expect(resData.password).to.eq(reqData.password);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"john_doe\",\n  \"email\": \"john@gmail.com\",\n  \"password\": \"password123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://fakestoreapi.com/users/1",
+          "protocol": "https",
+          "host": [
+            "fakestoreapi",
+            "com"
+          ],
+          "path": [
+            "users",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
