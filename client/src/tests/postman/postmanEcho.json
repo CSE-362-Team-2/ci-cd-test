@@ -1,0 +1,291 @@
+{
+	"info": {
+		"_postman_id": "c2d92fc2-5f6a-4da1-858c-5612be3f40e8",
+		"name": "Postman Echo API Test Suite",
+		"description": "50-test API collection for validating GET, POST, PUT, and PATCH requests with Postman Echo.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "57155885",
+		"_collection_link": "https://2024dipta-6384523.postman.co/workspace/Dipta-13's-Workspace~875fe404-8507-499e-81ca-917ccaefcf49/collection/57155885-c2d92fc2-5f6a-4da1-858c-5612be3f40e8?action=share&source=collection_link&creator=57155885"
+	},
+	"item": [
+		{
+			"name": "01 - GET Request Tests",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Test 1: Status code is successful\", function () {\n    pm.expect(pm.response.code).to.be.within(200, 299);\n});",
+							"pm.test(\"Test 2: Response time is below 5000ms\", function () {\n    pm.expect(pm.response.responseTime).to.be.below(5000);\n});",
+							"pm.test(\"Test 3: Content-Type header exists\", function () {\n    pm.response.to.have.header('Content-Type');\n});",
+							"pm.test(\"Test 4: Response is valid JSON\", function () {\n    pm.response.to.be.json;\n});",
+							"pm.test(\"Test 5: Response body is not empty\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n});",
+							"pm.test(\"Test 6: Response contains query arguments\", function () {\n    pm.expect(pm.response.json()).to.have.property('args');\n});",
+							"pm.test(\"Test 7: Response contains request headers\", function () {\n    pm.expect(pm.response.json()).to.have.property('headers');\n});",
+							"pm.test(\"Test 8: Response contains request URL\", function () {\n    pm.expect(pm.response.json()).to.have.property('url');\n});",
+							"pm.test(\"Test 9: Request method is GET\", function () {\n    pm.expect(pm.request.method).to.eql('GET');\n});",
+							"pm.test(\"Test 10: Echoed URL contains the endpoint\", function () {\n    pm.expect(pm.response.json().url).to.include('/get');\n});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://postman-echo.com/get?name=Dipta&course=API%20Testing",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"get"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Dipta"
+						},
+						{
+							"key": "course",
+							"value": "API%20Testing"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "02 - POST Request Tests",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Test 11: Status code is successful\", function () {\n    pm.expect(pm.response.code).to.be.within(200, 299);\n});",
+							"pm.test(\"Test 12: Response time is below 5000ms\", function () {\n    pm.expect(pm.response.responseTime).to.be.below(5000);\n});",
+							"pm.test(\"Test 13: Content-Type header exists\", function () {\n    pm.response.to.have.header('Content-Type');\n});",
+							"pm.test(\"Test 14: Response is valid JSON\", function () {\n    pm.response.to.be.json;\n});",
+							"pm.test(\"Test 15: Response body is not empty\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n});",
+							"pm.test(\"Test 16: Response contains query arguments\", function () {\n    pm.expect(pm.response.json()).to.have.property('args');\n});",
+							"pm.test(\"Test 17: Response contains echoed request data\", function () {\n    pm.expect(pm.response.json()).to.have.property('data');\n});",
+							"pm.test(\"Test 18: Response contains request headers\", function () {\n    pm.expect(pm.response.json()).to.have.property('headers');\n});",
+							"pm.test(\"Test 19: Response contains request URL\", function () {\n    pm.expect(pm.response.json()).to.have.property('url');\n});",
+							"pm.test(\"Test 20: Request method is POST\", function () {\n    pm.expect(pm.request.method).to.eql('POST');\n});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "text/plain"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "This is a POST request for API testing.",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://postman-echo.com/post",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "03 - PUT Request Tests",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Test 21: Status code is successful\", function () {\n    pm.expect(pm.response.code).to.be.within(200, 299);\n});",
+							"pm.test(\"Test 22: Response time is below 5000ms\", function () {\n    pm.expect(pm.response.responseTime).to.be.below(5000);\n});",
+							"pm.test(\"Test 23: Content-Type header exists\", function () {\n    pm.response.to.have.header('Content-Type');\n});",
+							"pm.test(\"Test 24: Response is valid JSON\", function () {\n    pm.response.to.be.json;\n});",
+							"pm.test(\"Test 25: Response body is not empty\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n});",
+							"pm.test(\"Test 26: Response contains query arguments\", function () {\n    pm.expect(pm.response.json()).to.have.property('args');\n});",
+							"pm.test(\"Test 27: Response contains echoed request data\", function () {\n    pm.expect(pm.response.json()).to.have.property('data');\n});",
+							"pm.test(\"Test 28: Response contains request headers\", function () {\n    pm.expect(pm.response.json()).to.have.property('headers');\n});",
+							"pm.test(\"Test 29: Response contains request URL\", function () {\n    pm.expect(pm.response.json()).to.have.property('url');\n});",
+							"pm.test(\"Test 30: Request method is PUT\", function () {\n    pm.expect(pm.request.method).to.eql('PUT');\n});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "text/plain"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "This is a PUT request for API testing.",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://postman-echo.com/put",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"put"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "04 - PATCH Request Tests",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Test 31: Status code is successful\", function () {\n    pm.expect(pm.response.code).to.be.within(200, 299);\n});",
+							"pm.test(\"Test 32: Response time is below 5000ms\", function () {\n    pm.expect(pm.response.responseTime).to.be.below(5000);\n});",
+							"pm.test(\"Test 33: Content-Type header exists\", function () {\n    pm.response.to.have.header('Content-Type');\n});",
+							"pm.test(\"Test 34: Response is valid JSON\", function () {\n    pm.response.to.be.json;\n});",
+							"pm.test(\"Test 35: Response body is not empty\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n});",
+							"pm.test(\"Test 36: Response contains query arguments\", function () {\n    pm.expect(pm.response.json()).to.have.property('args');\n});",
+							"pm.test(\"Test 37: Response contains echoed request data\", function () {\n    pm.expect(pm.response.json()).to.have.property('data');\n});",
+							"pm.test(\"Test 38: Response contains request headers\", function () {\n    pm.expect(pm.response.json()).to.have.property('headers');\n});",
+							"pm.test(\"Test 39: Response contains request URL\", function () {\n    pm.expect(pm.response.json()).to.have.property('url');\n});",
+							"pm.test(\"Test 40: Request method is PATCH\", function () {\n    pm.expect(pm.request.method).to.eql('PATCH');\n});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "text/plain"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "This is a PATCH request for API testing.",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://postman-echo.com/patch",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"patch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "05 - GET Query Parameter Tests",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Test 41: Status code is successful\", function () {\n    pm.expect(pm.response.code).to.be.within(200, 299);\n});",
+							"pm.test(\"Test 42: Response time is below 5000ms\", function () {\n    pm.expect(pm.response.responseTime).to.be.below(5000);\n});",
+							"pm.test(\"Test 43: Content-Type header exists\", function () {\n    pm.response.to.have.header('Content-Type');\n});",
+							"pm.test(\"Test 44: Response is valid JSON\", function () {\n    pm.response.to.be.json;\n});",
+							"pm.test(\"Test 45: Response body is not empty\", function () {\n    pm.expect(pm.response.text()).to.not.be.empty;\n});",
+							"pm.test(\"Test 46: Query arguments are returned\", function () {\n    pm.expect(pm.response.json()).to.have.property('args');\n});",
+							"pm.test(\"Test 47: Name query parameter is correct\", function () {\n    pm.expect(pm.response.json().args.name).to.eql('Dipta');\n});",
+							"pm.test(\"Test 48: Type query parameter is correct\", function () {\n    pm.expect(pm.response.json().args.type).to.eql('student');\n});",
+							"pm.test(\"Test 49: Request method is GET\", function () {\n    pm.expect(pm.request.method).to.eql('GET');\n});",
+							"pm.test(\"Test 50: Echoed URL contains the GET endpoint\", function () {\n    pm.expect(pm.response.json().url).to.include('/get');\n});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "https://postman-echo.com/get?name=Dipta&type=student",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"get"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Dipta"
+						},
+						{
+							"key": "type",
+							"value": "student"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
