@@ -23,13 +23,8 @@ jobs:
             fi
             cd my-app
             git fetch origin $BRANCH
-            git checkout $BRANCH
+            git switch $BRANCH
             git pull origin $BRANCH
 
-            docker build -t demo-app .
-
-            docker stop demo-container || true
-            docker rm demo-container || true
-            docker run -d --name demo-container --restart unless-stopped -p 8000:8000 demo-app
-
+            docker compose up -d --build --remove-orphans
             docker image prune -f
