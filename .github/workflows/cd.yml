@@ -30,6 +30,13 @@ jobs:
             git switch $BRANCH
             git pull origin $BRANCH
 
+            # Dynamically create the .env file from GitHub Secrets
+            cat <<EOF > .env
+            POSTGRES_DB_NAME=${{ secrets.POSTGRES_DB_NAME }}
+            POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+            POSTGRES_PASSWD=${{ secrets.POSTGRES_PASSWD }}
+            EOF
+
             docker-compose down --remove-orphans || true
             docker-compose up -d --build --force-recreate
             docker image prune -f
