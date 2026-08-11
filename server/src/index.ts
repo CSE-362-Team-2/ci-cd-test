@@ -1,11 +1,13 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
+import { logger } from "hono/logger";
 import postRoutes from "./routes/postRoutes";
 import { initDb } from "./config/db";
 
 const app = new Hono();
 
 initDb();
+app.use(logger());
 
 // Healthcheck
 app.get("/", (c) => c.text("Forum API server running..."));
