@@ -35,6 +35,7 @@ jobs:
             POSTGRES_DB_NAME=${{ secrets.POSTGRES_DB_NAME }}
             POSTGRES_USER=${{ secrets.POSTGRES_USER }}
             POSTGRES_PASSWD=${{ secrets.POSTGRES_PASSWD }}
+            POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
             EOF
 
             docker-compose down --remove-orphans || true
