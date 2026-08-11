@@ -23,7 +23,7 @@ jobs:
             BRANCH="${{ github.ref_name }}"
 
             if [ ! -d "my-app" ]; then
-              git clone -b $BRANCH https://github.com/A7reus/ci-cd-test.git my-app
+              git clone -b $BRANCH https://github.com/CSE-362-Team-2/ci-cd-test.git my-app
             fi
             cd my-app
             git fetch origin $BRANCH
