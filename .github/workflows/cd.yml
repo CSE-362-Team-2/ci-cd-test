@@ -23,12 +23,20 @@ jobs:
             BRANCH="${{ github.ref_name }}"
 
             if [ ! -d "my-app" ]; then
-              git clone -b $BRANCH https://github.com/A7reus/ci-cd-test.git my-app
+              git clone -b $BRANCH https://github.com/CSE-362-Team-2/ci-cd-test.git my-app
             fi
             cd my-app
             git fetch origin $BRANCH
             git switch $BRANCH
             git pull origin $BRANCH
+
+            # Dynamically create the .env file from GitHub Secrets
+            cat <<EOF > .env
+            POSTGRES_DB_NAME=${{ secrets.POSTGRES_DB_NAME }}
+            POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+            POSTGRES_PASSWD=${{ secrets.POSTGRES_PASSWD }}
+            POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+            EOF
 
             docker-compose down --remove-orphans || true
             docker-compose up -d --build --force-recreate

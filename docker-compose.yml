@@ -20,7 +20,7 @@ services:
       - db
     environment:
       DB_HOST: db
-      DB_PORT: 5432
+      DB_PORT: ${POSTGRES_PORT}
       DB_NAME: ${POSTGRES_DB_NAME}
       DB_USER: ${POSTGRES_USER}
       DB_PASSWORD: ${POSTGRES_PASSWD}
@@ -33,7 +33,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWD}
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
