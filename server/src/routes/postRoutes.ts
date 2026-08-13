@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { createPost } from "../controllers/postController";
+import { createPost } from "../controllers/postController.js";
 
 const postRoutes = new Hono();
 

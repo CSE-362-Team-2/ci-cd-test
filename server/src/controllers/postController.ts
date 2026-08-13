@@ -1,5 +1,5 @@
 import { Context } from "hono";
-import { PostModel } from "../models/postModel";
+import { PostModel } from "../models/postModel.js";
 
 // CREATE: POST /api/posts
 export const createPost = async (c: Context) => {

@@ -9,8 +9,7 @@
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
     "rootDir": "./src",
-    "outDir": "./dist",
-    "moduleResolution": "bundler"
+    "outDir": "./dist"
   },
   "exclude": ["node_modules"]
 }

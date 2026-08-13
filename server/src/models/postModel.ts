@@ -1,5 +1,5 @@
-import { pool } from "../config/db";
-import type { Post } from "../types/postsType";
+import { pool } from "../config/db.js";
+import type { Post } from "../types/postsType.js";
 
 export const PostModel = {
   // CREATE

@@ -1,8 +1,8 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
-import postRoutes from "./routes/postRoutes";
-import { initDb } from "./config/db";
+import postRoutes from "./routes/postRoutes.js";
+import { initDb } from "./config/db.js";
 
 const app = new Hono();
 
