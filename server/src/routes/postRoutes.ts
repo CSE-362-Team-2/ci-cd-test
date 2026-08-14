@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { createPost } from "../controllers/postController.js";
+import { createPost, updatePost } from "../controllers/postController.js";
 
 const postRoutes = new Hono();
 
@@ -8,7 +8,7 @@ postRoutes.post("/", createPost);
 // READ
 // postRoutes.get("/", getAllPosts);
 // UPDATE
-// postRoutes.put("/:id", updatePost);
+postRoutes.put("/:id", updatePost);
 // DELETE
 // postRoutes.delete("/:id", deletePost);
 
