@@ -25,6 +25,12 @@ POSTGRES_PASSWD=devpassword123
 POSTGRES_PORT=5432
 ```
 
+Enable corepack.
+
+```bash
+corepack enable
+```
+
 ## Running for Development
 
 1. Start the Database container:
