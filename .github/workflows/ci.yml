@@ -38,23 +38,29 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
 
-      - name: Create .env file for testing
+      - name: Install Server Dependencies
         run: |
-          cat <<EOF > .env
-          POSTGRES_DB_NAME=db_dev
-          POSTGRES_USER=user
-          POSTGRES_PASSWD=passwd
-          POSTGRES_PORT=5432
-          EOF
+          cd server
+          pnpm install --frozen-lockfile
 
-      - name: Start Application Stack
-        run: docker compose up -d --build
-
-      - name: Wait for Server Readiness
+      - name: Start PostgreSQL Container
         run: |
-          echo "Waiting for server to start on http://localhost:5000..."
-          timeout 60s bash -c 'until curl -s http://localhost:5000/api/posts > /dev/null; do sleep 2; done'
-          echo "Server is ready"
+          POSTGRES_DB_NAME=db_dev \
+          POSTGRES_USER=user \
+          POSTGRES_PASSWD=passwd \
+          POSTGRES_PORT=5432 \
+          docker compose up -d db
+
+      - name: Start Dev Server
+        env:
+          DB_HOST: "127.0.0.1"
+          POSTGRES_PORT: "5432"
+          POSTGRES_DB_NAME: "db_dev"
+          POSTGRES_USER: "user"
+          POSTGRES_PASSWD: "passwd"
+        run: |
+          cd server
+          pnpm dev &
 
       - name: Run Postman Collection with Newman
         run: |
@@ -63,6 +69,7 @@ jobs:
           # pnpm dlx newman run client/src/tests/postman/JSONPlaceholder.json
           # pnpm dlx newman run client/src/tests/postman/postmanEcho.json
           # pnpm dlx newman run client/src/tests/postman/FakeStoreAPI.json
+
       - name: Stop Docker Stack
         if: always()
         run: docker compose down -v
