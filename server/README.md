@@ -48,12 +48,26 @@
 
 ```json
 {
+  "errCode": 100,
+  "errMsg": "Title is required"
+}
+```
+
+```json
+{
   "errCode": 101,
   "errMsg": "Content is required"
 }
 ```
 
-3. Server Failure (`500 Internal Server Error`)
+```json
+{
+  "errCode": 102,
+  "errMsg": "Author is required"
+}
+```
+
+5. Server Failure (`500 Internal Server Error`)
 
 ```json
 {
