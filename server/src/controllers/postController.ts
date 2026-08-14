@@ -18,14 +18,17 @@ export const createPost = async (c: Context) => {
   }
 };
 
-// READ: GET /api/posts
+// READ: GET /api/posts - Get all posts
 export const getAllPosts = async (c: Context) => {
   try {
     const posts = await PostModel.findAll();
     return c.json({ posts, count: posts.length }, 200);
   } catch (error) {
     console.error(error);
-    return c.json({ error: "Failed to fetch posts" }, 500);
+    return c.json({ 
+      errCode: 500, 
+      errMsg: "Failed to fetch posts" 
+    }, 500);
   }
 };
 
@@ -33,24 +36,37 @@ export const getAllPosts = async (c: Context) => {
 export const getPostById = async (c: Context) => {
   try {
     const idParam = c.req.param("id");
-    if (!idParam) {
-      return c.json({ error: "Invalid post ID" }, 400);
+    
+    if (!idParam || idParam.trim() === "") {
+      return c.json({ 
+        errCode: 130, 
+        errMsg: "`id` is required for this request" 
+      }, 400);
     }
-
+    
     const id = parseInt(idParam);
-    if (isNaN(id)) {
-      return c.json({ error: "Invalid post ID" }, 400);
+    if (isNaN(id) || id <= 0) {
+      return c.json({ 
+        errCode: 132, 
+        errMsg: "`id` must be a valid positive number" 
+      }, 400);
     }
-
+    
     const post = await PostModel.findById(id);
     if (!post) {
-      return c.json({ error: "Post not found" }, 404);
+      return c.json({ 
+        errCode: 131, 
+        errMsg: "Post not found" 
+      }, 404);
     }
-
+    
     return c.json({ post }, 200);
   } catch (error) {
     console.error(error);
-    return c.json({ error: "Failed to fetch post" }, 500);
+    return c.json({ 
+      errCode: 500, 
+      errMsg: "Failed to fetch post" 
+    }, 500);
   }
 };
 
