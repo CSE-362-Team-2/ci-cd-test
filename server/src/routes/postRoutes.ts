@@ -1,12 +1,12 @@
 import { Hono } from "hono";
-import { createPost, deletePost } from "../controllers/postController.js";
-
+import { createPost, getAllPosts, getPostById, deletePost } from "../controllers/postController.js";
 const postRoutes = new Hono();
 
 // CREATE
 postRoutes.post("/", createPost);
 // READ
-// postRoutes.get("/", getAllPosts);
+postRoutes.get("/", getAllPosts);
+postRoutes.get("/:id", getPostById);
 // UPDATE
 // postRoutes.put("/:id", updatePost);
 // DELETE
