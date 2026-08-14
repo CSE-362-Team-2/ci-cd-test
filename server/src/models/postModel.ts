@@ -14,9 +14,26 @@ export const PostModel = {
     return res.rows[0];
   },
 
-  // READ
-  // async findAll(): Promise<Post[]> {
-  // },
+  async findAll(): Promise<Post[]> {
+    const query = `
+      SELECT * FROM posts
+      ORDER BY created_at DESC
+    `;
+
+    const res = await pool.query(query);
+    return res.rows;
+  },
+
+  // READ - Get single post by ID
+  async findById(id: number): Promise<Post | null> {
+    const query = `
+      SELECT * FROM posts
+      WHERE id = $1
+    `;
+
+    const res = await pool.query(query, [id]);
+    return res.rows[0] || null;
+  },
 
   // UPDATE
   async update(
@@ -41,6 +58,13 @@ export const PostModel = {
   },
 
   // DELETE
-  // async delete(id: number): Promise<boolean> {
-  // },
+  async delete(id: string): Promise<string> {
+    const query = `
+      DELETE FROM posts WHERE id = $1
+      RETURNING id
+    `;
+
+    const res = await pool.query(query, [id]);
+    return res.rows[0];
+  },
 };
