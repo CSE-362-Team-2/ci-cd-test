@@ -44,6 +44,13 @@ export const PostModel = {
   // },
 
   // DELETE
-  // async delete(id: number): Promise<boolean> {
-  // },
+  async delete(id: string): Promise<string> {
+    const query = `
+      DELETE FROM posts WHERE id = $1
+      RETURNING id
+    `;
+
+    const res = await pool.query(query, [id]);
+    return res.rows[0];
+  },
 };

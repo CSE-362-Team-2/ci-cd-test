@@ -5,16 +5,33 @@ import { PostModel } from "../models/postModel.js";
 export const createPost = async (c: Context) => {
   try {
     const { title, content, author } = await c.req.json();
+    const cleanTitle = title.trim();
+    const cleanContent = content.trim();
+    const cleanAuthor = author.trim();
 
-    if (!title || !content || !author) {
-      return c.json({ error: "Title, content, and author are required" }, 400);
+    if (!cleanTitle) {
+      return c.json({ errCode: 100, errMsg: "Title is required" }, 400);
+    } else if (!cleanContent) {
+      return c.json({ errCode: 101, errMsg: "Content is required" }, 400);
+    } else if (!cleanAuthor) {
+      return c.json({ errCode: 102, errMsg: "Author is required" }, 400);
     }
 
-    const newPost = await PostModel.create(title, content, author);
+    const newPost = await PostModel.create(
+      cleanTitle,
+      cleanContent,
+      cleanAuthor,
+    );
     return c.json({ message: "Post created successfully", post: newPost }, 201);
   } catch (error) {
     console.error(error);
-    return c.json({ error: "Failed to create post" }, 500);
+    return c.json(
+      {
+        errCode: 104,
+        errMsg: "Failed to create post due to internal server error",
+      },
+      500,
+    );
   }
 };
 
@@ -75,5 +92,17 @@ export const getPostById = async (c: Context) => {
 // };
 
 // 4. DELETE: DELETE /api/posts/:id
-// export const deletePost = async (c: Context) => {
-// };
+export const deletePost = async (c: Context) => {
+  let postId = c.req.param("id");
+  if (postId === undefined || postId === null) {
+    return c.json({ errCode: 130, errMsg: "`id` is required for this request" }, 400);
+  }
+  postId = postId.trim();
+
+  const isDeleted: string = await PostModel.delete(postId);
+  if (isDeleted === undefined || isDeleted === null) {
+    return c.json({ errCode: 131, errMsg: "Failed to delete post" }, 500);
+  }
+
+  return c.json({ id: postId });
+};
