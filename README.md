@@ -95,8 +95,8 @@ docker compose down -v
 
 ## Service Ports and Addresses
 
-| Service                 | Local URL / Address     | Container Port |
-| :---------------------- | :---------------------- | :------------- |
-| **Client**              | `http://localhost:8000` | 8000           |
-| **Hono API Server**     | `http://localhost:5000` | 5000           |
-| **PostgreSQL Database** | `localhost:5432`        | 5432           |
+| Service                 | Local URL / Address         | Container Port |
+| :---------------------- | :-------------------------- | :------------- |
+| **Client**              | `http://localhost:8000`     | 8000           |
+| **Hono API Server**     | `http://localhost:5000`     | 5000           |
+| **PostgreSQL Database** | `postgres://localhost:5432` | 5432           |
