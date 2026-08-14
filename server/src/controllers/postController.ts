@@ -5,16 +5,29 @@ import { PostModel } from "../models/postModel.js";
 export const createPost = async (c: Context) => {
   try {
     const { title, content, author } = await c.req.json();
+    const cleanTitle = title.trim();
+    const cleanContent = content.trim();
+    const cleanAuthor = author.trim();
 
-    if (!title || !content || !author) {
-      return c.json({ error: "Title, content, and author are required" }, 400);
+    if (!cleanTitle || !cleanContent || !cleanAuthor) {
+      return c.json(
+        { success: false, error: "Title, content, and author are required" },
+        400,
+      );
     }
 
-    const newPost = await PostModel.create(title, content, author);
-    return c.json({ message: "Post created successfully", post: newPost }, 201);
+    const newPost = await PostModel.create(
+      cleanTitle,
+      cleanContent,
+      cleanAuthor,
+    );
+    return c.json(
+      { success: true, message: "Post created successfully", post: newPost },
+      201,
+    );
   } catch (error) {
     console.error(error);
-    return c.json({ error: "Failed to create post" }, 500);
+    return c.json({ success: false, error: "Failed to create post" }, 500);
   }
 };
 
