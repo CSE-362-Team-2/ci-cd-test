@@ -9,11 +9,12 @@ export const createPost = async (c: Context) => {
     const cleanContent = content.trim();
     const cleanAuthor = author.trim();
 
-    if (!cleanTitle || !cleanContent || !cleanAuthor) {
-      return c.json(
-        { success: false, error: "Title, content, and author are required" },
-        400,
-      );
+    if (!cleanTitle) {
+      return c.json({ errCode: 100, errMsg: "Title is required" }, 400);
+    } else if (!cleanContent) {
+      return c.json({ errCode: 101, errMsg: "Content is required" }, 400);
+    } else if (!cleanAuthor) {
+      return c.json({ errCode: 102, errMsg: "Author is required" }, 400);
     }
 
     const newPost = await PostModel.create(
@@ -21,13 +22,16 @@ export const createPost = async (c: Context) => {
       cleanContent,
       cleanAuthor,
     );
-    return c.json(
-      { success: true, message: "Post created successfully", post: newPost },
-      201,
-    );
+    return c.json({ message: "Post created successfully", post: newPost }, 201);
   } catch (error) {
     console.error(error);
-    return c.json({ success: false, error: "Failed to create post" }, 500);
+    return c.json(
+      {
+        errCode: 104,
+        errMsg: "Failed to create post due to internal server error",
+      },
+      500,
+    );
   }
 };
 

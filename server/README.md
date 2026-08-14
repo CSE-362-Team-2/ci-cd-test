@@ -32,7 +32,6 @@
 
 ```json
 {
-  "success": true,
   "message": "Post created successfully",
   "post": {
     "id": 1,
@@ -49,8 +48,8 @@
 
 ```json
 {
-  "success": false,
-  "error": "Title, content, and author are required"
+  "errCode": 101,
+  "errMsg": "Content is required"
 }
 ```
 
@@ -58,7 +57,7 @@
 
 ```json
 {
-  "success": false,
-  "error": "Failed to create pospt"
+  "errCode": 104,
+  "errMsg": "Failed to create post due to internal server error"
 }
 ```
