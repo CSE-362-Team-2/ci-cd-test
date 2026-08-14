@@ -29,7 +29,7 @@ export const createPost = async (c: Context) => {
 // 4. DELETE: DELETE /api/posts/:id
 export const deletePost = async (c: Context) => {
   let postId = c.req.param("id");
-  if (postId == undefined || postId == null) {
+  if (postId === undefined || postId === null) {
     return c.json({ errCode: 130, errMsg: "`id` is required for this request" }, 400);
   }
   postId = postId.trim();
