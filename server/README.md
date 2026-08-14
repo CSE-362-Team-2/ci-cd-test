@@ -12,7 +12,7 @@
 
 | Field     | Type     | Required | Description                                |
 | :-------- | :------- | :------- | :----------------------------------------- |
-| `title`   | `string` | **Yes**  | The title of the post (non-empty).         |
+| `title`   | `string` | **Yes**  | The title of the post.                     |
 | `content` | `string` | **Yes**  | The main body text or content of the post. |
 | `author`  | `string` | **Yes**  | The author of the post.                    |
 
