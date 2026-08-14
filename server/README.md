@@ -1,8 +1,10 @@
 ## GET /api/posts
+
 ### Request Headers
 None required.
-### Example Response
-1. Success (`200 OK`)
+
+### Success Response
+HTTP 200
 ```json
 {
   "posts": [
@@ -18,21 +20,25 @@ None required.
   "count": 1
 }
 ```
-2. Server Failure (`500 Internal Server Error`)
+
+### Server Failure
+HTTP 500
 ```json
 {
-  "errCode": 500,
+  "errCode": 110,
   "errMsg": "Failed to fetch posts"
 }
 ```
 
 ## GET /api/posts/:id
+
 ### Path Parameters
 | Param | Type     | Required | Description                  |
 | :---- | :------- | :------- | :---------------------------- |
 | `id`  | `number` | **Yes**  | The ID of the post to fetch. |
-### Example Response
-1. Success (`200 OK`)
+
+### Success Response
+HTTP 200
 ```json
 {
   "post": {
@@ -45,31 +51,39 @@ None required.
   }
 }
 ```
-2. Missing ID (`400 Bad Request`)
+
+### Missing ID
+HTTP 400
 ```json
 {
-  "errCode": 130,
+  "errCode": 111,
   "errMsg": "`id` is required for this request"
 }
 ```
-3. Invalid ID (`400 Bad Request`)
+
+### Invalid ID
+HTTP 400
 ```json
 {
-  "errCode": 132,
+  "errCode": 112,
   "errMsg": "`id` must be a valid positive number"
 }
 ```
-4. Not Found (`404 Not Found`)
+
+### Not Found
+HTTP 404
 ```json
 {
-  "errCode": 131,
+  "errCode": 113,
   "errMsg": "Post not found"
 }
 ```
-5. Server Failure (`500 Internal Server Error`)
+
+### Server Failure
+HTTP 500
 ```json
 {
-  "errCode": 500,
+  "errCode": 110,
   "errMsg": "Failed to fetch post"
 }
 ```
