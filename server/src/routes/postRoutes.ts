@@ -2,7 +2,7 @@ import { Hono } from "hono";
 
 
 
-import { createPost, getAllPosts, getPostById, deletePost } from "../controllers/postController.js";
+import { createPost, getAllPosts, getPostById, deletePost ,updatePost } from "../controllers/postController.js";
 
 const postRoutes = new Hono();
 
