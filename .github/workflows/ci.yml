@@ -38,9 +38,44 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
 
+      - name: Install Server Dependencies
+        run: |
+          cd server
+          pnpm install --frozen-lockfile
+
+      - name: Start PostgreSQL Container
+        run: |
+          POSTGRES_DB_NAME=myappdb_dev \
+          POSTGRES_USER=postgres \
+          POSTGRES_PASSWD=devpassword123 \
+          POSTGRES_PORT=5432 \
+          docker compose up -d db
+
+      - name: Wait for PostgreSQL Readiness
+        run: ./.github/scripts/wait-for-db.sh
+
+      - name: Start Dev Server
+        env:
+          DB_HOST: "127.0.0.1"
+          POSTGRES_PORT: "5432"
+          POSTGRES_DB_NAME: "myappdb_dev"
+          POSTGRES_USER: "postgres"
+          POSTGRES_PASSWD: "devpassword123"
+        run: |
+          cd server
+          pnpm dev &
+
+      - name: Wait for Hono Dev Server Readiness
+        run: ./.github/scripts/wait-for-server.sh
+
       - name: Run Postman Collection with Newman
         run: |
-          pnpm dlx newman run client/src/tests/postman/DummyJSON.json
-          pnpm dlx newman run client/src/tests/postman/JSONPlaceholder.json
-          pnpm dlx newman run client/src/tests/postman/postmanEcho.json
-          pnpm dlx newman run client/src/tests/postman/FakeStoreAPI.json
+          pnpm dlx newman run server/tests/postman/post_creation_endpoint.json
+          # pnpm dlx newman run client/src/tests/postman/DummyJSON.json
+          # pnpm dlx newman run client/src/tests/postman/JSONPlaceholder.json
+          # pnpm dlx newman run client/src/tests/postman/postmanEcho.json
+          # pnpm dlx newman run client/src/tests/postman/FakeStoreAPI.json
+
+      - name: Stop Docker Stack
+        if: always()
+        run: docker compose down -v

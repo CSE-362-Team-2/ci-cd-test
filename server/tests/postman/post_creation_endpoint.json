@@ -1,0 +1,61 @@
+{
+  "info": {
+    "_postman_id": "704001a6-0372-4dbb-9092-642015c07136",
+    "name": "CRUD API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52098803"
+  },
+  "item": [
+    {
+      "name": "CREATE",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 201 Created\", function () {\n    pm.response.to.have.status(201);\n});\n\npm.test(\"Content-Type header is application/json\", function () {\n    pm.response.to.have.header(\"content-type\", \"application/json\");\n});\n\npm.test(\"Response contains valid post object\", function () {\n    const responseData = pm.response.json();\n    pm.expect(responseData.message).to.eql(\"Post created successfully\");\n\n    pm.expect(responseData).to.have.property(\"post\");\n    const post = responseData.post;\n\n    pm.expect(post).to.have.property(\"id\").that.is.a(\"number\");\n    pm.expect(post.title).to.eql(\"Welcome to the Forum!\");\n    pm.expect(post.content).to.eql(\"This is my very first post on this forum.\");\n    pm.expect(post.author).to.eql(\"John\");\n    \n    pm.expect(post).to.have.property(\"created_at\");\n    pm.expect(post).to.have.property(\"updated_at\");\n});\n\npm.test(\"Save created post ID as a collection variable\", function () {\n    const responseData = pm.response.json();\n    if (responseData.post && responseData.post.id) {\n        pm.collectionVariables.set(\"postId\", responseData.post.id);\n        console.log(\"Saved postId variable:\", responseData.post.id);\n    }\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"title\": \"Welcome to the Forum!\",\n    \"content\": \"This is my very first post on this forum.\",\n    \"author\": \"John\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/posts",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "postId",
+      "value": ""
+    }
+  ]
+}
