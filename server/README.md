@@ -14,7 +14,7 @@
 | :-------- | :------- | :------- | :----------------------------------------- |
 | `title`   | `string` | **Yes**  | The title of the post (non-empty).         |
 | `content` | `string` | **Yes**  | The main body text or content of the post. |
-| `author`  | `string` | **Yes**  | The main body text or content of the post. |
+| `author`  | `string` | **Yes**  | The author of the post.                    |
 
 ### Example Request Body
 
