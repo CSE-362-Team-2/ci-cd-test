@@ -52,10 +52,7 @@ jobs:
           docker compose up -d db
 
       - name: Wait for PostgreSQL Readiness
-        run: |
-          echo "Waiting for PostgreSQL to accept connections..."
-          timeout 30s bash -c 'until docker compose exec -T db pg_isready -U user -d db_dev; do sleep 1; done'
-          echo "PostgreSQL is ready"
+        run: ./.github/scripts/wait-for-db.sh
 
       - name: Start Dev Server
         env:
@@ -69,10 +66,7 @@ jobs:
           pnpm dev &
 
       - name: Wait for Hono Dev Server Readiness
-        run: |
-          echo "Waiting for Hono server on http://localhost:5000..."
-          timeout 30s bash -c 'until curl -s http://localhost:5000/api/posts > /dev/null; do sleep 1; done'
-          echo "Hono Dev Server is ready"
+        run: ./.github/scripts/wait-for-server.sh
 
       - name: Run Postman Collection with Newman
         run: |
