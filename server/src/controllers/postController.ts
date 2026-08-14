@@ -35,7 +35,7 @@ export const deletePost = async (c: Context) => {
   postId = postId.trim();
 
   const isDeleted: string = await PostModel.delete(postId);
-  if (isDeleted == undefined || isDeleted == null) {
+  if (isDeleted === undefined || isDeleted === null) {
     return c.json({ errCode: 131, errMsg: "Failed to delete post" }, 500);
   }
 
