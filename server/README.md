@@ -1,8 +1,77 @@
-```
-npm install
-npm run dev
+# CRUD API Documentation
+
+## POST /api/posts
+
+### Request Headers
+
+| Header         | Type     | Value              | Required |
+| :------------- | :------- | :----------------- | :------- |
+| `Content-Type` | `string` | `application/json` | Yes      |
+
+### Request Body Schema
+
+| Field     | Type     | Required | Description                                |
+| :-------- | :------- | :------- | :----------------------------------------- |
+| `title`   | `string` | **Yes**  | The title of the post.                     |
+| `content` | `string` | **Yes**  | The main body text or content of the post. |
+| `author`  | `string` | **Yes**  | The author of the post.                    |
+
+### Example Request Body
+
+```json
+{
+  "title": "Welcome to the Forum!",
+  "content": "This is my very first post on this forum.",
+  "author": "John"
+}
 ```
 
+### Example Response
+
+1. Success (`201 Created`)
+
+```json
+{
+  "message": "Post created successfully",
+  "post": {
+    "id": 1,
+    "title": "Welcome to the Forum!",
+    "content": "This is my very first post on this forum.",
+    "author": "John",
+    "created_at": "2026-08-14T14:30:58.231Z",
+    "updated_at": "2026-08-14T14:30:58.231Z"
+  }
+}
 ```
-open http://localhost:3000
+
+2. Validation Failure (`400 Bad Request`)
+
+```json
+{
+  "errCode": 100,
+  "errMsg": "Title is required"
+}
+```
+
+```json
+{
+  "errCode": 101,
+  "errMsg": "Content is required"
+}
+```
+
+```json
+{
+  "errCode": 102,
+  "errMsg": "Author is required"
+}
+```
+
+5. Server Failure (`500 Internal Server Error`)
+
+```json
+{
+  "errCode": 104,
+  "errMsg": "Failed to create post due to internal server error"
+}
 ```
