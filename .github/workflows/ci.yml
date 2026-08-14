@@ -45,9 +45,9 @@ jobs:
 
       - name: Start PostgreSQL Container
         run: |
-          POSTGRES_DB_NAME=db_dev \
-          POSTGRES_USER=user \
-          POSTGRES_PASSWD=passwd \
+          POSTGRES_DB_NAME=myappdb_dev \
+          POSTGRES_USER=postgres \
+          POSTGRES_PASSWD=devpassword123 \
           POSTGRES_PORT=5432 \
           docker compose up -d db
 
@@ -61,9 +61,9 @@ jobs:
         env:
           DB_HOST: "127.0.0.1"
           POSTGRES_PORT: "5432"
-          POSTGRES_DB_NAME: "db_dev"
-          POSTGRES_USER: "user"
-          POSTGRES_PASSWD: "passwd"
+          POSTGRES_DB_NAME: "myappdb_dev"
+          POSTGRES_USER: "postgres"
+          POSTGRES_PASSWD: "devpassword123"
         run: |
           cd server
           pnpm dev &
