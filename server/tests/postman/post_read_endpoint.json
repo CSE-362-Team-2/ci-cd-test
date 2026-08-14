@@ -1,0 +1,82 @@
+{
+  "info": {
+    "_postman_id": "08522c27-8488-41a6-afa1-6d907b6bc015",
+    "name": "CRUD API test",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "30705179"
+  },
+  "item": [
+    {
+      "name": "http://localhost:5000/api/posts",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Test 1: Status code is 200\npm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\n// Test 2: Response is JSON\npm.test(\"Response is JSON\", function () {\n    pm.response.to.have.jsonBody();\n});\n\n// Test 3: Response has posts array\npm.test(\"Response has posts array\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.have.property('posts');\n    pm.expect(jsonData.posts).to.be.an('array');\n});\n\n// Test 4: Response has count property\npm.test(\"Response has count\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.have.property('count');\n    pm.expect(jsonData.count).to.be.a('number');\n});\n\n// Test 5: Count matches posts length\npm.test(\"Count matches posts length\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData.posts.length).to.equal(jsonData.count);\n});\n\n// Test 6: Each post has required fields\npm.test(\"Each post has required fields\", function () {\n    const jsonData = pm.response.json();\n    if (jsonData.posts.length > 0) {\n        jsonData.posts.forEach(post => {\n            pm.expect(post).to.have.all.keys(\n                'id', 'title', 'content', 'author', 'created_at', 'updated_at'\n            );\n            pm.expect(post.id).to.be.a('number');\n            pm.expect(post.title).to.be.a('string');\n            pm.expect(post.content).to.be.a('string');\n            pm.expect(post.author).to.be.a('string');\n        });\n    }\n})"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"My Third Post\",\n  \"content\": \"This is the content of my third post. It's really interesting!\",\n  \"author\": \"maruf\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/posts",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:5000/api/posts/2",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Test 1: Status code is 200\npm.test(\"Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\n\n// Test 2: Response is JSON\npm.test(\"Response is JSON\", function () {\n    pm.response.to.have.jsonBody();\n});\n\n// Test 3: Response has post object\npm.test(\"Response has post object\", function () {\n    const jsonData = pm.response.json();\n    pm.expect(jsonData).to.have.property('post');\n    pm.expect(jsonData.post).to.be.an('object');\n});\n\n// Test 4: Post has all required fields\npm.test(\"Post has all required fields\", function () {\n    const jsonData = pm.response.json();\n    const post = jsonData.post;\n    pm.expect(post).to.have.all.keys(\n        'id', 'title', 'content', 'author', 'created_at', 'updated_at'\n    );\n    pm.expect(post.id).to.be.a('number');\n    pm.expect(post.title).to.be.a('string');\n    pm.expect(post.content).to.be.a('string');\n    pm.expect(post.author).to.be.a('string');\n});\n\n// Test 5: Post ID matches the requested ID\npm.test(\"Post ID matches requested ID\", function () {\n    const jsonData = pm.response.json();\n    const url = pm.request.url.toString();\n    const requestedId = parseInt(url.split('/').pop());\n    pm.expect(jsonData.post.id).to.equal(requestedId);\n});\n"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/posts/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
