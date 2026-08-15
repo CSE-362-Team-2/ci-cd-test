@@ -1,0 +1,143 @@
+{
+  "info": {
+    "_postman_id": "9e954815-8c31-4a85-8274-e7f4f5ec8c8d",
+    "name": "HonoApiTesting",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57155885",
+    "_collection_link": "https://go.postman.co/collection/57155885-9e954815-8c31-4a85-8274-e7f4f5ec8c8d?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "test-1",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Real PostgreSQL Test\",\r\n  \"content\": \"Testing local API request with a real PostgreSQL container.\",\r\n  \"author\": \"Dipta\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/posts",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "test-2",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Docker PostgreSQL Test 2\",\r\n  \"content\": \"This is my second test post created through Postman.\",\r\n  \"author\": \"Test User\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/posts",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Updated Docker PostgreSQL Test\",\r\n  \"content\": \"This post has been updated using a PUT request from Postman.\",\r\n  \"author\": \"Dipta Updated\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/posts/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "post_dont_exist",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"title\": \"Updated Docker PostgreSQL Test\",\r\n  \"content\": \"This post has been updated using a PUT request from Postman.\",\r\n  \"author\": \"Dipta Updated\"\r\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/posts/3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
