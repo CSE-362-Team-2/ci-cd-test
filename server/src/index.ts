@@ -3,14 +3,17 @@ import { Hono } from "hono";
 import { logger } from "hono/logger";
 import postRoutes from "./routes/postRoutes.js";
 import { initDb } from "./config/db.js";
+import { prometheus } from "@hono/prometheus";
 
 const app = new Hono();
+const { printMetrics, registerMetrics } = prometheus();
 
 initDb();
 app.use(logger());
 
-// Healthcheck
-app.get("/", (c) => c.text("Forum API server running..."));
+// setup prometheus monitoring endpoint /metrics
+app.use(registerMetrics);
+app.get('/metrics', printMetrics);
 
 app.route("/api/posts", postRoutes);
 
