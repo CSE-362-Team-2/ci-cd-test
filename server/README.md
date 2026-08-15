@@ -111,6 +111,46 @@ None required.
 }
 ```
 
+## DELETE /api/posts/:id
+
+### Path Parameters
+
+| Param | Type     | Required | Description                  |
+| :---- | :------- | :------- | :---------------------------- |
+| `id`  | `string` | **Yes**  | The ID of the post to delete. |
+
+### Example Request
+
+`DELETE /api/posts/1`
+
+### Example Response
+
+1. Success (`200 OK`)
+
+```json
+{
+  "id": "1"
+}
+```
+
+2. Missing ID (`400 Bad Request`)
+
+```json
+{
+  "errCode": 130,
+  "errMsg": "`id` is required for this request"
+}
+```
+
+3. Server Failure (`500 Internal Server Error`)
+
+```json
+{
+  "errCode": 131,
+  "errMsg": "Failed to delete post"
+}
+```
+
 ## GET /api/posts/:id
 
 ### Path Parameters
