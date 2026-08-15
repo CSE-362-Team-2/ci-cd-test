@@ -6,6 +6,8 @@ services:
     ports:
       - "8000:8000"
     restart: unless-stopped
+    networks:
+      - monitoring
 
   server:
     build:
@@ -23,6 +25,8 @@ services:
       DB_NAME: ${POSTGRES_DB_NAME:-myappdb_dev}
       DB_USER: ${POSTGRES_USER:-postgres}
       DB_PASSWORD: ${POSTGRES_PASSWORD:-devpassword123}
+    networks:
+      - monitoring
 
   db:
     image: postgres:17-alpine
@@ -44,6 +48,36 @@ services:
       retries: 5
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - monitoring
+
+  prometheus:
+    image: prom/prometheus:v3.13.2
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:13.0.6-slim
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    networks:
+      - monitoring
+    volumes:
+      # Mount provider config into Grafana's provisioning folder
+      - ./grafana-dashboard-provider.yaml:/etc/grafana/provisioning/dashboards/dashboard-provider.yaml
+      # Mount dashboard files to the path specified in options.path
+      - ./grafana-dashboard-config.yaml:/var/lib/grafana/dashboards/grafana-dashboard-config.yaml
 
 volumes:
   postgres_data:
+
+networks:
+  monitoring:
