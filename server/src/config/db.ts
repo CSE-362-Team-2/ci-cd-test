@@ -6,7 +6,7 @@ export const pool = new Pool({
   port: Number(process.env.DB_PORT) || 5432,
   database: process.env.POSTGRES_DB_NAME || "myappdb_dev",
   user: process.env.POSTGRES_USER || "postgres",
-  password: process.env.POSTGRES_PASSWD || "devpassword123",
+  password: process.env.POSTGRES_PASSWORD || "devpassword123",
 });
 
 export const initDb = async () => {

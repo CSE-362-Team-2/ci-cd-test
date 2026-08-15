@@ -22,7 +22,7 @@ services:
       DB_PORT: ${POSTGRES_PORT:-5432}
       DB_NAME: ${POSTGRES_DB_NAME:-myappdb_dev}
       DB_USER: ${POSTGRES_USER:-postgres}
-      DB_PASSWORD: ${POSTGRES_PASSWD:-devpassword123}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-devpassword123}
 
   db:
     image: postgres:17-alpine
@@ -30,7 +30,7 @@ services:
     environment:
       POSTGRES_DB: ${POSTGRES_DB_NAME:-myappdb_dev}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWD:-devpassword123}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-devpassword123}
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     healthcheck:

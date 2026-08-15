@@ -21,7 +21,7 @@ Create a `.env` file in the root directory:
 ```bash
 POSTGRES_DB_NAME=myappdb_dev
 POSTGRES_USER=postgres
-POSTGRES_PASSWD=devpassword123
+POSTGRES_PASSWORD=devpassword123
 POSTGRES_PORT=5432
 ```
 
