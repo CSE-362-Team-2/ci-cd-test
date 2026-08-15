@@ -70,11 +70,6 @@ services:
       - "3000:3000"
     networks:
       - monitoring
-    volumes:
-      # Mount provider config into Grafana's provisioning folder
-      - ./grafana-dashboard-provider.yaml:/etc/grafana/provisioning/dashboards/dashboard-provider.yaml
-      # Mount dashboard files to the path specified in options.path
-      - ./grafana-dashboard-config.yaml:/var/lib/grafana/dashboards/grafana-dashboard-config.yaml
 
 volumes:
   postgres_data:
