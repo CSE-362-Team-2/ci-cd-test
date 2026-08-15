@@ -171,3 +171,92 @@ None required.
   "errMsg": "Failed to fetch post"
 }
 ```
+
+## PUT /api/posts/:id
+
+### Request Headers
+
+| Header         | Type     | Value              | Required |
+| :------------- | :------- | :----------------- | :------- |
+| `Content-Type` | `string` | `application/json` | Yes      |
+
+### Path Parameters
+
+| Param | Type     | Required | Description                   |
+| :---- | :------- | :------- | :----------------------------- |
+| `id`  | `number` | **Yes**  | The ID of the post to update. |
+
+### Request Body Schema
+
+| Field     | Type     | Required | Description                                |
+| :-------- | :------- | :------- | :----------------------------------------- |
+| `title`   | `string` | **Yes**  | The new title of the post.                 |
+| `content` | `string` | **Yes**  | The new body text or content of the post.  |
+
+### Example Request Body
+
+```json
+{
+  "title": "Updated Post Title",
+  "content": "This is the updated content of the post."
+}
+```
+
+### Example Response
+
+1. Success (`200 OK`)
+
+```json
+{
+  "message": "Post updated successfully",
+  "post": {
+    "id": 1,
+    "title": "Updated Post Title",
+    "content": "This is the updated content of the post.",
+    "author": "John",
+    "created_at": "2026-08-14T14:30:58.231Z",
+    "updated_at": "2026-08-14T14:35:22.456Z"
+  }
+}
+```
+
+2. Validation Failure (`400 Bad Request`)
+
+```json
+{
+  "errCode": 140,
+  "errMsg": "Invalid post ID"
+}
+```
+
+```json
+{
+  "errCode": 141,
+  "errMsg": "Title is required for updating"
+}
+```
+
+```json
+{
+  "errCode": 142,
+  "errMsg": "Content is required for updating"
+}
+```
+
+3. Not Found (`404 Not Found`)
+
+```json
+{
+  "errCode": 143,
+  "errMsg": "Post not found"
+}
+```
+
+4. Server Failure (`500 Internal Server Error`)
+
+```json
+{
+  "errCode": 144,
+  "errMsg": "Failed to update post due to internal server error"
+}
+```
