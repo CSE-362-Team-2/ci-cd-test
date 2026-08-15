@@ -114,7 +114,7 @@ export const updatePost = async (c: Context) => {
     if (!cleanTitle) {
       return c.json(
         {
-          errCode: 140,
+          errCode: 141,
           errMsg: "Title is required for updating",
         },
         400,
@@ -122,7 +122,7 @@ export const updatePost = async (c: Context) => {
     } else if (!cleanContent) {
       return c.json(
         {
-          errCode: 141,
+          errCode: 142,
           errMsg: "Content is required for updating",
         },
         400,
@@ -138,7 +138,7 @@ export const updatePost = async (c: Context) => {
     if (!updatedPost) {
       return c.json(
         {
-          errCode: 142,
+          errCode: 143,
           errMsg: "Post not found",
         },
         404,
