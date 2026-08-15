@@ -14,29 +14,36 @@ services:
     ports:
       - "5000:5000"
     restart: unless-stopped
-
-    # Server shouldn't start until DB container does
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       DB_HOST: db
-      DB_PORT: ${POSTGRES_PORT}
-      DB_NAME: ${POSTGRES_DB_NAME}
-      DB_USER: ${POSTGRES_USER}
-      DB_PASSWORD: ${POSTGRES_PASSWD}
+      DB_PORT: ${POSTGRES_PORT:-5432}
+      DB_NAME: ${POSTGRES_DB_NAME:-myappdb_dev}
+      DB_USER: ${POSTGRES_USER:-postgres}
+      DB_PASSWORD: ${POSTGRES_PASSWD:-devpassword123}
 
   db:
     image: postgres:17-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${POSTGRES_DB_NAME}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWD}
+      POSTGRES_DB: ${POSTGRES_DB_NAME:-myappdb_dev}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWD:-devpassword123}
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB_NAME:-myappdb_dev}",
+        ]
+      interval: 3s
+      timeout: 5s
+      retries: 5
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-# Named volume to persist data across container restarts
 volumes:
   postgres_data:
