@@ -71,6 +71,9 @@ jobs:
       - name: Run Postman Collection with Newman
         run: |
           pnpm dlx newman run server/tests/postman/post_creation_endpoint.json
+          pnpm dlx newman run server/tests/postman/post_read_endpoint.json
+          pnpm dlx newman run server/tests/postman/post_update_endpoint.json
+          pnpm dlx newman run server/tests/postman/post_delete_endpoint.json
           # pnpm dlx newman run client/src/tests/postman/DummyJSON.json
           # pnpm dlx newman run client/src/tests/postman/JSONPlaceholder.json
           # pnpm dlx newman run client/src/tests/postman/postmanEcho.json
