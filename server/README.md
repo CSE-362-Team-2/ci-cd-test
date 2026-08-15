@@ -172,9 +172,13 @@ None required.
 }
 ```
 
-
-  
 ## PUT /api/posts/:id
+
+### Request Headers
+
+| Header         | Type     | Value              | Required |
+| :------------- | :------- | :----------------- | :------- |
+| `Content-Type` | `string` | `application/json` | Yes      |
 
 ### Path Parameters
 
