@@ -62,7 +62,7 @@
           "protocol": "http",
           "host": ["localhost"],
           "port": "5000",
-          "path": ["api", "posts", "2"]
+          "path": ["api", "posts", "1"]
         }
       },
       "response": []
