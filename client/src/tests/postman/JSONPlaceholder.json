@@ -91,11 +91,11 @@
       ],
       "request": {
         "method": "POST",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": {
           "mode": "raw",
           "raw": "{\n  \"title\": \"Random Post Title\",\n  \"body\": \"This is a random post body content\",\n  \"userId\": 1\n}",
-          "options": {"raw": {"language": "json"}}
+          "options": { "raw": { "language": "json" } }
         },
         "url": {
           "raw": "https://jsonplaceholder.typicode.com/posts",
@@ -201,11 +201,11 @@
       ],
       "request": {
         "method": "PUT",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": {
           "mode": "raw",
           "raw": "{\n  \"userId\": 1,\n  \"id\": 2,\n  \"title\": \"Fully Updated Post 2\",\n  \"body\": \"This is the fully updated content for post 2\"\n}",
-          "options": {"raw": {"language": "json"}}
+          "options": { "raw": { "language": "json" } }
         },
         "url": {
           "raw": "https://jsonplaceholder.typicode.com/posts/2",
@@ -307,11 +307,11 @@
       ],
       "request": {
         "method": "PATCH",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": {
           "mode": "raw",
           "raw": "{\n  \"title\": \"Patched Post 3 Title\"\n}",
-          "options": {"raw": {"language": "json"}}
+          "options": { "raw": { "language": "json" } }
         },
         "url": {
           "raw": "https://jsonplaceholder.typicode.com/posts/3",
@@ -515,11 +515,11 @@
       ],
       "request": {
         "method": "POST",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": {
           "mode": "raw",
           "raw": "{\n  \"postId\": 1,\n  \"name\": \"Random Comment\",\n  \"email\": \"random@test.com\",\n  \"body\": \"This is a random comment body\"\n}",
-          "options": {"raw": {"language": "json"}}
+          "options": { "raw": { "language": "json" } }
         },
         "url": {
           "raw": "https://jsonplaceholder.typicode.com/posts/1/comments",
@@ -598,11 +598,11 @@
       ],
       "request": {
         "method": "PUT",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": {
           "mode": "raw",
           "raw": "{\n  \"userId\": 1,\n  \"id\": 5,\n  \"title\": \"Updated Album 5 Title\"\n}",
-          "options": {"raw": {"language": "json"}}
+          "options": { "raw": { "language": "json" } }
         },
         "url": {
           "raw": "https://jsonplaceholder.typicode.com/albums/5",
@@ -682,7 +682,7 @@
           "protocol": "https",
           "host": ["jsonplaceholder", "typicode", "com"],
           "path": ["posts"],
-          "query": [{"key": "userId", "value": "3"}]
+          "query": [{ "key": "userId", "value": "3" }]
         }
       },
       "response": []
@@ -712,11 +712,11 @@
       ],
       "request": {
         "method": "PATCH",
-        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": {
           "mode": "raw",
           "raw": "{\n  \"title\": \"Patched Todo 10 Title\"\n}",
-          "options": {"raw": {"language": "json"}}
+          "options": { "raw": { "language": "json" } }
         },
         "url": {
           "raw": "https://jsonplaceholder.typicode.com/todos/10",

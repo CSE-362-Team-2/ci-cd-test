@@ -4,7 +4,10 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "lint": "oxlint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@hono/node-server": "^2.1.0",
@@ -15,6 +18,8 @@
   "devDependencies": {
     "@types/node": "^26.1.1",
     "@types/pg": "^8.21.0",
+    "oxlint": "^1.79.0",
+    "prettier": "^3.9.6",
     "tsx": "^4.23.0",
     "typescript": "^7.0.2"
   }

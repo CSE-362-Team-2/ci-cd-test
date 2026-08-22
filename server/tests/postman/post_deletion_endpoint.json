@@ -42,14 +42,9 @@
         "url": {
           "raw": "http://localhost:5000/api/posts",
           "protocol": "http",
-          "host": [
-            "localhost"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "posts"
-          ]
+          "path": ["api", "posts"]
         }
       },
       "response": []
@@ -60,9 +55,7 @@
         {
           "listen": "prerequest",
           "script": {
-            "exec": [
-              ""
-            ],
+            "exec": [""],
             "type": "text/javascript",
             "packages": {},
             "requests": {}
@@ -95,15 +88,9 @@
         "url": {
           "raw": "http://localhost:5000/api/posts/{{postId}}",
           "protocol": "http",
-          "host": [
-            "localhost"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "posts",
-            "{{postId}}"
-          ]
+          "path": ["api", "posts", "{{postId}}"]
         }
       },
       "response": []

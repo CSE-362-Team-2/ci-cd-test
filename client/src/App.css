@@ -1,4 +1,4 @@
-.counter-container{
+.counter-container {
   display: flex;
   gap: 5px;
 }
@@ -172,7 +172,7 @@
 
   &::before,
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: -4.5px;
     border: 5px solid transparent;

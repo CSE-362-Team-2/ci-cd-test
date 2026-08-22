@@ -39,14 +39,8 @@
         "url": {
           "raw": "https://dummyjson.com/user/login",
           "protocol": "https",
-          "host": [
-            "dummyjson",
-            "com"
-          ],
-          "path": [
-            "user",
-            "login"
-          ]
+          "host": ["dummyjson", "com"],
+          "path": ["user", "login"]
         }
       },
       "response": []
@@ -79,14 +73,8 @@
         "url": {
           "raw": "https://dummyjson.com/user/me",
           "protocol": "https",
-          "host": [
-            "dummyjson",
-            "com"
-          ],
-          "path": [
-            "user",
-            "me"
-          ]
+          "host": ["dummyjson", "com"],
+          "path": ["user", "me"]
         }
       },
       "response": []
@@ -124,14 +112,8 @@
         "url": {
           "raw": "https://dummyjson.com/carts/1",
           "protocol": "https",
-          "host": [
-            "dummyjson",
-            "com"
-          ],
-          "path": [
-            "carts",
-            "1"
-          ]
+          "host": ["dummyjson", "com"],
+          "path": ["carts", "1"]
         }
       },
       "response": []
@@ -155,14 +137,8 @@
         "url": {
           "raw": "https://dummyjson.com/carts/1",
           "protocol": "https",
-          "host": [
-            "dummyjson",
-            "com"
-          ],
-          "path": [
-            "carts",
-            "1"
-          ]
+          "host": ["dummyjson", "com"],
+          "path": ["carts", "1"]
         }
       },
       "response": []
@@ -195,14 +171,8 @@
         "url": {
           "raw": "https://dummyjson.com/products/1",
           "protocol": "https",
-          "host": [
-            "dummyjson",
-            "com"
-          ],
-          "path": [
-            "products",
-            "1"
-          ]
+          "host": ["dummyjson", "com"],
+          "path": ["products", "1"]
         }
       },
       "response": []

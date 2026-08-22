@@ -115,7 +115,7 @@ None required.
 
 ### Path Parameters
 
-| Param | Type     | Required | Description                  |
+| Param | Type     | Required | Description                   |
 | :---- | :------- | :------- | :---------------------------- |
 | `id`  | `string` | **Yes**  | The ID of the post to delete. |
 
@@ -155,9 +155,9 @@ None required.
 
 ### Path Parameters
 
-| Param | Type     | Required | Description                   |
-| :---- | :------- | :------- | :----------------------------- |
-| `id`  | `number` | **Yes**  | The ID of the post to fetch.  |
+| Param | Type     | Required | Description                  |
+| :---- | :------- | :------- | :--------------------------- |
+| `id`  | `number` | **Yes**  | The ID of the post to fetch. |
 
 ### Example Response
 
@@ -223,15 +223,15 @@ None required.
 ### Path Parameters
 
 | Param | Type     | Required | Description                   |
-| :---- | :------- | :------- | :----------------------------- |
+| :---- | :------- | :------- | :---------------------------- |
 | `id`  | `number` | **Yes**  | The ID of the post to update. |
 
 ### Request Body Schema
 
-| Field     | Type     | Required | Description                                |
-| :-------- | :------- | :------- | :----------------------------------------- |
-| `title`   | `string` | **Yes**  | The new title of the post.                 |
-| `content` | `string` | **Yes**  | The new body text or content of the post.  |
+| Field     | Type     | Required | Description                               |
+| :-------- | :------- | :------- | :---------------------------------------- |
+| `title`   | `string` | **Yes**  | The new title of the post.                |
+| `content` | `string` | **Yes**  | The new body text or content of the post. |
 
 ### Example Request Body
 
