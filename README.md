@@ -93,10 +93,29 @@ docker compose down
 docker compose down -v
 ```
 
+## HTTPS and Domain
+
+Production traffic is terminated by **Caddy**, which automatically obtains and
+renews Let's Encrypt certificates for `juscef.me` and `www.juscef.me`.
+
+- `https://juscef.me` serves the client
+- `https://juscef.me/api/*` proxies to the Hono server (prefix is stripped)
+
+Requirements on the VM side:
+
+- DNS: `A @ -> <VM public IP>` and `CNAME www -> juscef.me.`
+- Azure NSG: inbound ports **80** and **443** open (80 is required for the ACME HTTP challenge)
+- Certificates persist in the `caddy_data` volume and survive redeploys
+
+Note: when running locally, Caddy logs ACME errors because `juscef.me` does not
+resolve to your machine — it still serves plain HTTP on port 80, which is fine
+for development.
+
 ## Service Ports and Addresses
 
-| Service                 | Local URL / Address         | Container Port |
-| :---------------------- | :-------------------------- | :------------- |
-| **Client**              | `http://localhost`          | 80             |
-| **Hono API Server**     | `http://localhost:5000`     | 5000           |
-| **PostgreSQL Database** | `postgres://localhost:5432` | 5432           |
+| Service                 | Local URL / Address                  | Container Port |
+| :---------------------- | :----------------------------------- | :------------- |
+| **Caddy (entrypoint)**  | `http://localhost`                   | 80, 443        |
+| **Client**              | via Caddy only                       | 80             |
+| **Hono API Server**     | `http://localhost:5000`, `/api/*`    | 5000           |
+| **PostgreSQL Database** | `postgres://localhost:5432`          | 5432           |
