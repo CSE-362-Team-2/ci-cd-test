@@ -68,3 +68,4 @@ temp/
 # OS specific
 Thumbs.db
 desktop.ini
+docker-compose.override.yml
