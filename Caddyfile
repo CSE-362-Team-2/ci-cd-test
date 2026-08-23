@@ -1,4 +1,4 @@
-juscef.me, www.juscef.me {
+jucsef.me, www.jucsef.me {
 	encode zstd gzip
 
 	handle /api/* {
