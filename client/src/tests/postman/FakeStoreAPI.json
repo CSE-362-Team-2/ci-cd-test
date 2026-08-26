@@ -50,14 +50,8 @@
         "url": {
           "raw": "https://fakestoreapi.com/products/1",
           "protocol": "https",
-          "host": [
-            "fakestoreapi",
-            "com"
-          ],
-          "path": [
-            "products",
-            "1"
-          ]
+          "host": ["fakestoreapi", "com"],
+          "path": ["products", "1"]
         }
       },
       "response": []
@@ -117,13 +111,8 @@
         "url": {
           "raw": "https://fakestoreapi.com/products",
           "protocol": "https",
-          "host": [
-            "fakestoreapi",
-            "com"
-          ],
-          "path": [
-            "products"
-          ]
+          "host": ["fakestoreapi", "com"],
+          "path": ["products"]
         }
       },
       "response": []
@@ -228,13 +217,8 @@
         "url": {
           "raw": "https://fakestoreapi.com/products",
           "protocol": "https",
-          "host": [
-            "fakestoreapi",
-            "com"
-          ],
-          "path": [
-            "products"
-          ]
+          "host": ["fakestoreapi", "com"],
+          "path": ["products"]
         }
       },
       "response": []
@@ -273,13 +257,8 @@
         "url": {
           "raw": "https://fakestoreapi.com/products",
           "protocol": "https",
-          "host": [
-            "fakestoreapi",
-            "com"
-          ],
-          "path": [
-            "products"
-          ]
+          "host": ["fakestoreapi", "com"],
+          "path": ["products"]
         }
       },
       "response": []
@@ -337,14 +316,8 @@
         "url": {
           "raw": "https://fakestoreapi.com/products/mango",
           "protocol": "https",
-          "host": [
-            "fakestoreapi",
-            "com"
-          ],
-          "path": [
-            "products",
-            "mango"
-          ]
+          "host": ["fakestoreapi", "com"],
+          "path": ["products", "mango"]
         }
       },
       "response": []
@@ -372,14 +345,8 @@
         "url": {
           "raw": "https://fakestoreapi.com/products/25",
           "protocol": "https",
-          "host": [
-            "fakestoreapi",
-            "com"
-          ],
-          "path": [
-            "products",
-            "25"
-          ]
+          "host": ["fakestoreapi", "com"],
+          "path": ["products", "25"]
         }
       },
       "response": []
@@ -407,14 +374,8 @@
         "url": {
           "raw": "https://fakestoreapi.com/products/mango",
           "protocol": "https",
-          "host": [
-            "fakestoreapi",
-            "com"
-          ],
-          "path": [
-            "products",
-            "mango"
-          ]
+          "host": ["fakestoreapi", "com"],
+          "path": ["products", "mango"]
         }
       },
       "response": []
@@ -491,13 +452,8 @@
         "url": {
           "raw": "https://fakestoreapi.com/carts",
           "protocol": "https",
-          "host": [
-            "fakestoreapi",
-            "com"
-          ],
-          "path": [
-            "carts"
-          ]
+          "host": ["fakestoreapi", "com"],
+          "path": ["carts"]
         }
       },
       "response": []
@@ -555,13 +511,8 @@
         "url": {
           "raw": "https://fakestoreapi.com/users",
           "protocol": "https",
-          "host": [
-            "fakestoreapi",
-            "com"
-          ],
-          "path": [
-            "users"
-          ]
+          "host": ["fakestoreapi", "com"],
+          "path": ["users"]
         }
       },
       "response": []
@@ -606,14 +557,8 @@
         "url": {
           "raw": "https://fakestoreapi.com/auth/login",
           "protocol": "https",
-          "host": [
-            "fakestoreapi",
-            "com"
-          ],
-          "path": [
-            "auth",
-            "login"
-          ]
+          "host": ["fakestoreapi", "com"],
+          "path": ["auth", "login"]
         }
       },
       "response": []
@@ -680,14 +625,8 @@
         "url": {
           "raw": "https://fakestoreapi.com/users/1",
           "protocol": "https",
-          "host": [
-            "fakestoreapi",
-            "com"
-          ],
-          "path": [
-            "users",
-            "1"
-          ]
+          "host": ["fakestoreapi", "com"],
+          "path": ["users", "1"]
         }
       },
       "response": []

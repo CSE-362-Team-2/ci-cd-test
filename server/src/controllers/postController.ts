@@ -42,10 +42,13 @@ export const getAllPosts = async (c: Context) => {
     return c.json({ posts, count: posts.length }, 200);
   } catch (error) {
     console.error(error);
-    return c.json({ 
-      errCode: 110, 
-      errMsg: "Failed to fetch posts" 
-    }, 500);
+    return c.json(
+      {
+        errCode: 110,
+        errMsg: "Failed to fetch posts",
+      },
+      500,
+    );
   }
 };
 
@@ -53,37 +56,49 @@ export const getAllPosts = async (c: Context) => {
 export const getPostById = async (c: Context) => {
   try {
     const idParam = c.req.param("id");
-    
+
     if (!idParam || idParam.trim() === "") {
-      return c.json({ 
-        errCode: 111, 
-        errMsg: "`id` is required for this request" 
-      }, 400);
+      return c.json(
+        {
+          errCode: 111,
+          errMsg: "`id` is required for this request",
+        },
+        400,
+      );
     }
-    
+
     const id = parseInt(idParam);
     if (isNaN(id) || id <= 0) {
-      return c.json({ 
-        errCode: 112, 
-        errMsg: "`id` must be a valid positive number" 
-      }, 400);
+      return c.json(
+        {
+          errCode: 112,
+          errMsg: "`id` must be a valid positive number",
+        },
+        400,
+      );
     }
-    
+
     const post = await PostModel.findById(id);
     if (!post) {
-      return c.json({ 
-        errCode: 113, 
-        errMsg: "Post not found" 
-      }, 404);
+      return c.json(
+        {
+          errCode: 113,
+          errMsg: "Post not found",
+        },
+        404,
+      );
     }
-    
+
     return c.json({ post }, 200);
   } catch (error) {
     console.error(error);
-    return c.json({ 
-      errCode: 110, 
-      errMsg: "Failed to fetch post" 
-    }, 500);
+    return c.json(
+      {
+        errCode: 110,
+        errMsg: "Failed to fetch post",
+      },
+      500,
+    );
   }
 };
 
@@ -105,11 +120,9 @@ export const updatePost = async (c: Context) => {
 
     const { title, content } = await c.req.json();
 
-    const cleanTitle =
-      typeof title === "string" ? title.trim() : "";
+    const cleanTitle = typeof title === "string" ? title.trim() : "";
 
-    const cleanContent =
-      typeof content === "string" ? content.trim() : "";
+    const cleanContent = typeof content === "string" ? content.trim() : "";
 
     if (!cleanTitle) {
       return c.json(
@@ -129,11 +142,7 @@ export const updatePost = async (c: Context) => {
       );
     }
 
-    const updatedPost = await PostModel.update(
-      id,
-      cleanTitle,
-      cleanContent,
-    );
+    const updatedPost = await PostModel.update(id, cleanTitle, cleanContent);
 
     if (!updatedPost) {
       return c.json(
@@ -168,7 +177,10 @@ export const updatePost = async (c: Context) => {
 export const deletePost = async (c: Context) => {
   let postId = c.req.param("id");
   if (postId === undefined || postId === null) {
-    return c.json({ errCode: 130, errMsg: "`id` is required for this request" }, 400);
+    return c.json(
+      { errCode: 130, errMsg: "`id` is required for this request" },
+      400,
+    );
   }
   postId = postId.trim();
 

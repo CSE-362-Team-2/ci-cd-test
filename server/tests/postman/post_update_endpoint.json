@@ -30,14 +30,9 @@
         "url": {
           "raw": "http://localhost:5000/api/posts",
           "protocol": "http",
-          "host": [
-            "localhost"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "posts"
-          ]
+          "path": ["api", "posts"]
         }
       },
       "response": []
@@ -60,14 +55,9 @@
         "url": {
           "raw": "http://localhost:5000/api/posts",
           "protocol": "http",
-          "host": [
-            "localhost"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "posts"
-          ]
+          "path": ["api", "posts"]
         }
       },
       "response": []
@@ -95,15 +85,9 @@
         "url": {
           "raw": "http://localhost:5000/api/posts/1",
           "protocol": "http",
-          "host": [
-            "localhost"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "posts",
-            "1"
-          ]
+          "path": ["api", "posts", "1"]
         }
       },
       "response": []
@@ -126,15 +110,9 @@
         "url": {
           "raw": "http://localhost:5000/api/posts/3",
           "protocol": "http",
-          "host": [
-            "localhost"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "posts",
-            "3"
-          ]
+          "path": ["api", "posts", "3"]
         }
       },
       "response": []
