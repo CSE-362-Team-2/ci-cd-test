@@ -1,0 +1,968 @@
+{
+  "info": {
+    "_postman_id": "0fb4f21f-7cb2-4fa7-8cc0-ab6d2fe0ef98",
+    "name": "Maruf Auth",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "30705179"
+  },
+  "item": [
+    {
+      "name": "1. Register - POST /api/maruf/auth/register",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const ts = Date.now();",
+              "const rand = Math.floor(Math.random()*100000);",
+              "const base = ts + \"_\" + rand;",
+              "const username = \"Maruf_\" + base;",
+              "const email = \"Maruf_\" + base + \"@Example.COM\";",
+              "const password = \"Password123!\";",
+              "pm.collectionVariables.set(\"testUsername\", username);",
+              "pm.collectionVariables.set(\"testEmail\", email);",
+              "pm.collectionVariables.set(\"testPassword\", password);",
+              "pm.collectionVariables.set(\"testUsernameLower\", username.toLowerCase());",
+              "pm.collectionVariables.set(\"testEmailLower\", email.toLowerCase());",
+              "console.log(\"Generated test user:\", username, email);"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status code is 201 Created\", function () { pm.response.to.have.status(201); });",
+              "pm.test(\"Content-Type is application/json\", function () { pm.response.to.have.header(\"content-type\", \"application/json\"); });",
+              "pm.test(\"Response has success message and user + token\", function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.message).to.eql(\"User registered successfully\");",
+              "    pm.expect(json).to.have.property(\"user\");",
+              "    pm.expect(json).to.have.property(\"token\").that.is.a(\"string\").and.not.empty;",
+              "    const user = json.user;",
+              "    pm.expect(user).to.have.property(\"id\").that.is.a(\"number\");",
+              "    pm.expect(user.username).to.eql(pm.collectionVariables.get(\"testUsername\"));",
+              "    pm.expect(user.email).to.eql(pm.collectionVariables.get(\"testEmail\"));",
+              "    pm.expect(user).to.have.property(\"created_at\");",
+              "    pm.expect(user).to.have.property(\"updated_at\");",
+              "    pm.expect(user).to.not.have.property(\"password\");",
+              "});",
+              "pm.test(\"Save token for later\", function () {",
+              "    const json = pm.response.json();",
+              "    if (json.token) pm.collectionVariables.set(\"authToken\", json.token);",
+              "    if (json.user && json.user.id) pm.collectionVariables.set(\"userId\", json.user.id);",
+              "});",
+              "",
+              "// --- Additional Register Tests via pm.sendRequest ---",
+              "",
+              "// Duplicate Email (409)",
+              "pm.sendRequest({",
+              "    url: 'http://localhost:5000/api/maruf/auth/register',",
+              "    method: 'POST',",
+              "    header: { 'Content-Type': 'application/json' },",
+              "    body: { mode: 'raw', raw: JSON.stringify({ username: \"Maruf_Dup_\" + Math.floor(Math.random()*100000), email: pm.collectionVariables.get(\"testEmail\"), password: pm.collectionVariables.get(\"testPassword\") }) }",
+              "}, function (err, res) {",
+              "    pm.test(\"Register Duplicate Email - Status code is 409 Conflict\", function () { pm.expect(res.code).to.eql(409); });",
+              "    pm.test(\"Register Duplicate Email - Error code 219\", function () {",
+              "        const json = res.json();",
+              "        pm.expect(json.errCode).to.eql(219);",
+              "        pm.expect(json.errMsg).to.eql(\"Email already registered\");",
+              "    });",
+              "    // Duplicate Username (409)",
+              "    pm.sendRequest({",
+              "        url: 'http://localhost:5000/api/maruf/auth/register',",
+              "        method: 'POST',",
+              "        header: { 'Content-Type': 'application/json' },",
+              "        body: { mode: 'raw', raw: JSON.stringify({ username: pm.collectionVariables.get(\"testUsername\"), email: \"alt_\" + Date.now() + \"_\" + Math.floor(Math.random()*10000) + \"@example.com\", password: pm.collectionVariables.get(\"testPassword\") }) }",
+              "    }, function (err, res) {",
+              "        pm.test(\"Register Duplicate Username - Status code is 409 Conflict\", function () { pm.expect(res.code).to.eql(409); });",
+              "        pm.test(\"Register Duplicate Username - Error code 220\", function () {",
+              "            const json = res.json();",
+              "            pm.expect(json.errCode).to.eql(220);",
+              "            pm.expect(json.errMsg).to.eql(\"Username already taken\");",
+              "        });",
+              "        // Missing Username (400)",
+              "        pm.sendRequest({",
+              "            url: 'http://localhost:5000/api/maruf/auth/register',",
+              "            method: 'POST',",
+              "            header: { 'Content-Type': 'application/json' },",
+              "            body: { mode: 'raw', raw: JSON.stringify({ email: \"missinguser_\" + Math.floor(Math.random()*100000) + \"@example.com\", password: \"Password123!\" }) }",
+              "        }, function (err, res) {",
+              "            pm.test(\"Register Missing Username - Status code is 400\", function () { pm.expect(res.code).to.eql(400); });",
+              "            pm.test(\"Register Missing Username - Error code 211\", function () {",
+              "                const json = res.json();",
+              "                pm.expect(json.errCode).to.eql(211);",
+              "            });",
+              "            // Username Too Short (400)",
+              "            pm.sendRequest({",
+              "                url: 'http://localhost:5000/api/maruf/auth/register',",
+              "                method: 'POST',",
+              "                header: { 'Content-Type': 'application/json' },",
+              "                body: { mode: 'raw', raw: JSON.stringify({ username: \"ab\", email: \"shortuser_\" + Math.floor(Math.random()*100000) + \"@example.com\", password: \"Password123!\" }) }",
+              "            }, function (err, res) {",
+              "                pm.test(\"Register Username Too Short - Status code is 400\", function () { pm.expect(res.code).to.eql(400); });",
+              "                pm.test(\"Register Username Too Short - Error code 212\", function () {",
+              "                    const json = res.json();",
+              "                    pm.expect(json.errCode).to.eql(212);",
+              "                });",
+              "                // Missing Email (400)",
+              "                pm.sendRequest({",
+              "                    url: 'http://localhost:5000/api/maruf/auth/register',",
+              "                    method: 'POST',",
+              "                    header: { 'Content-Type': 'application/json' },",
+              "                    body: { mode: 'raw', raw: JSON.stringify({ username: \"user_missing_email_\" + Math.floor(Math.random()*100000), password: \"Password123!\" }) }",
+              "                }, function (err, res) {",
+              "                    pm.test(\"Register Missing Email - Status code is 400\", function () { pm.expect(res.code).to.eql(400); });",
+              "                    pm.test(\"Register Missing Email - Error code 214\", function () {",
+              "                        const json = res.json();",
+              "                        pm.expect(json.errCode).to.eql(214);",
+              "                    });",
+              "                    // Invalid Email Format (400)",
+              "                    pm.sendRequest({",
+              "                        url: 'http://localhost:5000/api/maruf/auth/register',",
+              "                        method: 'POST',",
+              "                        header: { 'Content-Type': 'application/json' },",
+              "                        body: { mode: 'raw', raw: JSON.stringify({ username: \"user_invalid_email_\" + Math.floor(Math.random()*100000), email: \"not-an-email\", password: \"Password123!\" }) }",
+              "                    }, function (err, res) {",
+              "                        pm.test(\"Register Invalid Email - Status code is 400\", function () { pm.expect(res.code).to.eql(400); });",
+              "                        pm.test(\"Register Invalid Email - Error code 215\", function () {",
+              "                            const json = res.json();",
+              "                            pm.expect(json.errCode).to.eql(215);",
+              "                        });",
+              "                        // Missing Password (400)",
+              "                        pm.sendRequest({",
+              "                            url: 'http://localhost:5000/api/maruf/auth/register',",
+              "                            method: 'POST',",
+              "                            header: { 'Content-Type': 'application/json' },",
+              "                            body: { mode: 'raw', raw: JSON.stringify({ username: \"user_nopass_\" + Math.floor(Math.random()*100000), email: \"nopass_\" + Math.floor(Math.random()*100000) + \"@example.com\" }) }",
+              "                        }, function (err, res) {",
+              "                            pm.test(\"Register Missing Password - Status code is 400\", function () { pm.expect(res.code).to.eql(400); });",
+              "                            pm.test(\"Register Missing Password - Error code 216\", function () {",
+              "                                const json = res.json();",
+              "                                pm.expect(json.errCode).to.eql(216);",
+              "                            });",
+              "                            // Short Password (400)",
+              "                            pm.sendRequest({",
+              "                                url: 'http://localhost:5000/api/maruf/auth/register',",
+              "                                method: 'POST',",
+              "                                header: { 'Content-Type': 'application/json' },",
+              "                                body: { mode: 'raw', raw: JSON.stringify({ username: \"user_shortpass_\" + Math.floor(Math.random()*100000), email: \"shortpass_\" + Math.floor(Math.random()*100000) + \"@example.com\", password: \"123\" }) }",
+              "                            }, function (err, res) {",
+              "                                pm.test(\"Register Short Password - Status code is 400\", function () { pm.expect(res.code).to.eql(400); });",
+              "                                pm.test(\"Register Short Password - Error code 217\", function () {",
+              "                                    const json = res.json();",
+              "                                    pm.expect(json.errCode).to.eql(217);",
+              "                                });",
+              "                            });",
+              "                        });",
+              "                    });",
+              "                });",
+              "            });",
+              "        });",
+              "    });",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"{{testUsername}}\",\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/maruf/auth/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "maruf",
+            "auth",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "2. Login - POST /api/maruf/auth/login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Login - Status code is 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Login - Response has Login successful message\", function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.message).to.eql(\"Login successful\");",
+              "    pm.expect(json).to.have.property(\"user\");",
+              "    pm.expect(json).to.have.property(\"token\").that.is.a(\"string\").and.not.empty;",
+              "    pm.expect(json.user.email).to.eql(pm.collectionVariables.get(\"testEmail\"));",
+              "    pm.expect(json.user.username).to.eql(pm.collectionVariables.get(\"testUsername\"));",
+              "    pm.expect(json.user).to.not.have.property(\"password\");",
+              "});",
+              "pm.test(\"Login - Save token\", function () {",
+              "    const json = pm.response.json();",
+              "    if (json.token) pm.collectionVariables.set(\"authToken\", json.token);",
+              "    if (json.user && json.user.id) pm.collectionVariables.set(\"userId\", json.user.id);",
+              "});",
+              "",
+              "// --- Additional Login Tests ---",
+              "// Success with Username",
+              "pm.sendRequest({",
+              "    url: 'http://localhost:5000/api/maruf/auth/login',",
+              "    method: 'POST',",
+              "    header: { 'Content-Type': 'application/json' },",
+              "    body: { mode: 'raw', raw: JSON.stringify({ username: pm.collectionVariables.get(\"testUsername\"), password: pm.collectionVariables.get(\"testPassword\") }) }",
+              "}, function (err, res) {",
+              "    pm.test(\"Login Success with Username - Status code is 200\", function () { pm.expect(res.code).to.eql(200); });",
+              "    pm.test(\"Login Success with Username - correct user\", function () {",
+              "        const json = res.json();",
+              "        pm.expect(json.message).to.eql(\"Login successful\");",
+              "        pm.expect(json.user.username).to.eql(pm.collectionVariables.get(\"testUsername\"));",
+              "    });",
+              "    // Success with Identifier Field",
+              "    pm.sendRequest({",
+              "        url: 'http://localhost:5000/api/maruf/auth/login',",
+              "        method: 'POST',",
+              "        header: { 'Content-Type': 'application/json' },",
+              "        body: { mode: 'raw', raw: JSON.stringify({ identifier: pm.collectionVariables.get(\"testEmail\"), password: pm.collectionVariables.get(\"testPassword\") }) }",
+              "    }, function (err, res) {",
+              "        pm.test(\"Login Success with Identifier - Status code is 200\", function () { pm.expect(res.code).to.eql(200); });",
+              "        pm.test(\"Login Success with Identifier - has token\", function () {",
+              "            const json = res.json();",
+              "            pm.expect(json).to.have.property(\"token\");",
+              "        });",
+              "        // Wrong Case Username (401)",
+              "        pm.sendRequest({",
+              "            url: 'http://localhost:5000/api/maruf/auth/login',",
+              "            method: 'POST',",
+              "            header: { 'Content-Type': 'application/json' },",
+              "            body: { mode: 'raw', raw: JSON.stringify({ username: pm.collectionVariables.get(\"testUsernameLower\"), password: pm.collectionVariables.get(\"testPassword\") }) }",
+              "        }, function (err, res) {",
+              "            pm.test(\"Login Wrong Case Username - Status code is 401\", function () { pm.expect(res.code).to.eql(401); });",
+              "            pm.test(\"Login Wrong Case Username - Error code 233\", function () {",
+              "                const json = res.json();",
+              "                pm.expect(json.errCode).to.eql(233);",
+              "            });",
+              "            // Wrong Case Email (401)",
+              "            pm.sendRequest({",
+              "                url: 'http://localhost:5000/api/maruf/auth/login',",
+              "                method: 'POST',",
+              "                header: { 'Content-Type': 'application/json' },",
+              "                body: { mode: 'raw', raw: JSON.stringify({ email: pm.collectionVariables.get(\"testEmailLower\"), password: pm.collectionVariables.get(\"testPassword\") }) }",
+              "            }, function (err, res) {",
+              "                pm.test(\"Login Wrong Case Email - Status code is 401\", function () { pm.expect(res.code).to.eql(401); });",
+              "                pm.test(\"Login Wrong Case Email - Error code 233\", function () {",
+              "                    const json = res.json();",
+              "                    pm.expect(json.errCode).to.eql(233);",
+              "                });",
+              "                // Wrong Password (401)",
+              "                pm.sendRequest({",
+              "                    url: 'http://localhost:5000/api/maruf/auth/login',",
+              "                    method: 'POST',",
+              "                    header: { 'Content-Type': 'application/json' },",
+              "                    body: { mode: 'raw', raw: JSON.stringify({ email: pm.collectionVariables.get(\"testEmail\"), password: \"WrongPassword123!\" }) }",
+              "                }, function (err, res) {",
+              "                    pm.test(\"Login Wrong Password - Status code is 401\", function () { pm.expect(res.code).to.eql(401); });",
+              "                    pm.test(\"Login Wrong Password - Error code 233\", function () {",
+              "                        const json = res.json();",
+              "                        pm.expect(json.errCode).to.eql(233);",
+              "                    });",
+              "                    // Missing Identifier (400)",
+              "                    pm.sendRequest({",
+              "                        url: 'http://localhost:5000/api/maruf/auth/login',",
+              "                        method: 'POST',",
+              "                        header: { 'Content-Type': 'application/json' },",
+              "                        body: { mode: 'raw', raw: JSON.stringify({ password: pm.collectionVariables.get(\"testPassword\") }) }",
+              "                    }, function (err, res) {",
+              "                        pm.test(\"Login Missing Identifier - Status code is 400\", function () { pm.expect(res.code).to.eql(400); });",
+              "                        pm.test(\"Login Missing Identifier - Error code 231\", function () {",
+              "                            const json = res.json();",
+              "                            pm.expect(json.errCode).to.eql(231);",
+              "                        });",
+              "                        // Missing Password (400)",
+              "                        pm.sendRequest({",
+              "                            url: 'http://localhost:5000/api/maruf/auth/login',",
+              "                            method: 'POST',",
+              "                            header: { 'Content-Type': 'application/json' },",
+              "                            body: { mode: 'raw', raw: JSON.stringify({ email: pm.collectionVariables.get(\"testEmail\") }) }",
+              "                        }, function (err, res) {",
+              "                            pm.test(\"Login Missing Password - Status code is 400\", function () { pm.expect(res.code).to.eql(400); });",
+              "                            pm.test(\"Login Missing Password - Error code 232\", function () {",
+              "                                const json = res.json();",
+              "                                pm.expect(json.errCode).to.eql(232);",
+              "                            });",
+              "                            // Non-existent User (401)",
+              "                            pm.sendRequest({",
+              "                                url: 'http://localhost:5000/api/maruf/auth/login',",
+              "                                method: 'POST',",
+              "                                header: { 'Content-Type': 'application/json' },",
+              "                                body: { mode: 'raw', raw: JSON.stringify({ email: \"nonexistent_\" + Math.floor(Math.random()*100000) + \"@example.com\", password: \"Password123!\" }) }",
+              "                            }, function (err, res) {",
+              "                                pm.test(\"Login Non-existent User - Status code is 401\", function () { pm.expect(res.code).to.eql(401); });",
+              "                                pm.test(\"Login Non-existent User - Error code 233\", function () {",
+              "                                    const json = res.json();",
+              "                                    pm.expect(json.errCode).to.eql(233);",
+              "                                });",
+              "                            });",
+              "                        });",
+              "                    });",
+              "                });",
+              "            });",
+              "        });",
+              "    });",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/maruf/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "maruf",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "3. Me - GET /api/maruf/auth/me",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Me - Status code is 200\", function () { pm.response.to.have.status(200); });\npm.test(\"Me - Response has user object\", function () {\n    const json = pm.response.json();\n    pm.expect(json).to.have.property(\"user\");\n    const user = json.user;\n    pm.expect(user).to.have.property(\"id\");\n    pm.expect(user.username).to.eql(pm.collectionVariables.get(\"testUsername\"));\n    pm.expect(user.email).to.eql(pm.collectionVariables.get(\"testEmail\"));\n    pm.expect(user).to.have.property(\"created_at\");\n    pm.expect(user).to.have.property(\"updated_at\");\n    pm.expect(user).to.not.have.property(\"password\");\n});\npm.test(\"Me - User id matches expected\", function () {\n    const json = pm.response.json();\n    pm.expect(json.user.id).to.eql(parseInt(pm.collectionVariables.get(\"userId\")));\n});\n\n// --- Additional Me Tests ---\n// Missing Token (401)\npm.sendRequest({\n    url: 'http://localhost:5000/api/maruf/auth/me',\n    method: 'GET'\n}, function (err, res) {\n    pm.test(\"Me Missing Token - Status code is 401\", function () { pm.expect(res.code).to.eql(401); });\n    pm.test(\"Me Missing Token - Error code 200\", function () {\n        const json = res.json();\n        pm.expect(json.errCode).to.eql(200);\n    });\n    // Invalid Token (401)\n    pm.sendRequest({\n        url: 'http://localhost:5000/api/maruf/auth/me',\n        method: 'GET',\n        header: { \n        'Authorization': pm.collectionVariables.get('bearer_token_0kvb')\n        }\n    }, function (err, res) {\n        pm.test(\"Me Invalid Token - Status code is 401\", function () { pm.expect(res.code).to.eql(401); });\n        pm.test(\"Me Invalid Token - Error code 201\", function () {\n            const json = res.json();\n            pm.expect(json.errCode).to.eql(201);\n        });\n        // Malformed Authorization Header - No Bearer Prefix (401)\n        pm.sendRequest({\n            url: 'http://localhost:5000/api/maruf/auth/me',\n            method: 'GET',\n            header: { 'Authorization': pm.collectionVariables.get(\"authToken\") }\n        }, function (err, res) {\n            pm.test(\"Me Malformed Header - Status code is 401\", function () { pm.expect(res.code).to.eql(401); });\n            pm.test(\"Me Malformed Header - Error code 200\", function () {\n                const json = res.json();\n                pm.expect(json.errCode).to.eql(200);\n            });\n            // Empty Bearer Token (401)\n            pm.sendRequest({\n                url: 'http://localhost:5000/api/maruf/auth/me',\n                method: 'GET',\n                header: { 'Authorization': 'Bearer ' }\n            }, function (err, res) {\n                pm.test(\"Me Empty Bearer - Status code is 401\", function () { pm.expect(res.code).to.eql(401); });\n                pm.test(\"Me Empty Bearer - Error code 200\", function () {\n                    const json = res.json();\n                    pm.expect(json.errCode).to.eql(200);\n                });\n            });\n        });\n    });\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/maruf/auth/me",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "maruf",
+            "auth",
+            "me"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "4. Create Post - POST /api/posts (Protected)",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const ts = Date.now();\nconst rand = Math.floor(Math.random()*10000);\npm.collectionVariables.set(\"postTitle\", \"Test Post \" + ts + \"_\" + rand);\npm.collectionVariables.set(\"postContent\", \"This is test post content created at \" + new Date().toISOString());"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Create Post - Status code is 201\", function () { \n    pm.response.to.have.status(201); \n});\n\npm.test(\"Create Post - Response has post object\", function () {\n    const json = pm.response.json();\n    pm.expect(json.message).to.eql(\"Post created successfully\");\n    pm.expect(json.post).to.have.property(\"id\");\n    pm.expect(json.post.title).to.eql(pm.collectionVariables.get(\"postTitle\"));\n    pm.expect(json.post.content).to.eql(pm.collectionVariables.get(\"postContent\"));\n    pm.expect(json.post).to.have.property(\"user_id\");\n});\n\npm.test(\"Save post ID for later\", function () {\n    const json = pm.response.json();\n    if (json.post && json.post.id) pm.collectionVariables.set(\"postId\", json.post.id);\n});\n\n// --- Additional Create Post Tests ---\n\n// Missing Token (401)\npm.sendRequest({\n    url: 'http://localhost:5000/api/posts',\n    method: 'POST',\n    header: { 'Content-Type': 'application/json' },\n    body: { mode: 'raw', raw: JSON.stringify({ \n        title: \"No Token Post\", \n        content: \"This should fail\", \n        author: \"unauthorized\" \n    }) }\n}, function (err, res) {\n    pm.test(\"Create Post No Token - Status code is 401\", function () { \n        pm.expect(res.code).to.eql(401); \n    });\n    pm.test(\"Create Post No Token - Error code 200\", function () {\n        const json = res.json();\n        pm.expect(json.errCode).to.eql(200);\n    });\n    \n    // Invalid Token (401) - Using invalid.token.here\n    pm.sendRequest({\n        url: 'http://localhost:5000/api/posts',\n        method: 'POST',\n        header: { \n            'Authorization': pm.collectionVariables.get('bearer_token_0ocl'), \n            'Content-Type': 'application/json' \n        },\n        body: { mode: 'raw', raw: JSON.stringify({ \n            title: \"Invalid Token Post\", \n            content: \"This should fail\" \n        }) }\n    }, function (err, res) {\n        pm.test(\"Create Post Invalid Token - Status code is 401\", function () { \n            pm.expect(res.code).to.eql(401); \n        });\n        pm.test(\"Create Post Invalid Token - Error code 201\", function () {\n            const json = res.json();\n            pm.expect(json.errCode).to.eql(201);\n            pm.expect(json.errMsg).to.eql(\"Unauthorized: Invalid or expired token\");\n        });\n        \n        // Missing Title (400)\n        pm.sendRequest({\n            url: 'http://localhost:5000/api/posts',\n            method: 'POST',\n            header: { \n                'Authorization': 'Bearer ' + pm.collectionVariables.get(\"authToken\"), \n                'Content-Type': 'application/json' \n            },\n            body: { mode: 'raw', raw: JSON.stringify({ \n                content: \"Missing title\", \n                author: \"testuser\" \n            }) }\n        }, function (err, res) {\n            pm.test(\"Create Post Missing Title - Status code is 400\", function () { \n                pm.expect(res.code).to.eql(400); \n            });\n            pm.test(\"Create Post Missing Title - Error code 100\", function () {\n                const json = res.json();\n                pm.expect(json.errCode).to.eql(100);\n            });\n            \n            // Missing Content (400)\n            pm.sendRequest({\n                url: 'http://localhost:5000/api/posts',\n                method: 'POST',\n                header: { \n                    'Authorization': 'Bearer ' + pm.collectionVariables.get(\"authToken\"), \n                    'Content-Type': 'application/json' \n                },\n                body: { mode: 'raw', raw: JSON.stringify({ \n                    title: \"Missing Content\", \n                    author: \"testuser\" \n                }) }\n            }, function (err, res) {\n                pm.test(\"Create Post Missing Content - Status code is 400\", function () { \n                    pm.expect(res.code).to.eql(400); \n                });\n                pm.test(\"Create Post Missing Content - Error code 101\", function () {\n                    const json = res.json();\n                    pm.expect(json.errCode).to.eql(101);\n                });\n            });\n        });\n    });\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"{{postTitle}}\",\n  \"content\": \"{{postContent}}\",\n  \"author\": \"{{testUsername}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/posts",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "5. Get All Posts - GET /api/posts (Public)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Get All Posts - Status code is 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Get All Posts - Response has posts array\", function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json).to.have.property(\"posts\");",
+              "    pm.expect(json).to.have.property(\"count\");",
+              "    pm.expect(Array.isArray(json.posts)).to.be.true;",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/posts",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "6. Get Single Post - GET /api/posts/:id (Public)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Get Single Post - Status code is 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Get Single Post - Response has post object\", function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json).to.have.property(\"post\");",
+              "    pm.expect(json.post).to.have.property(\"id\");",
+              "    pm.expect(json.post).to.have.property(\"title\");",
+              "    pm.expect(json.post).to.have.property(\"content\");",
+              "});",
+              "pm.test(\"Get Single Post - ID matches requested\", function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.post.id).to.eql(parseInt(pm.collectionVariables.get(\"postId\")));",
+              "});",
+              "",
+              "// Non-existent Post (404)",
+              "pm.sendRequest({",
+              "    url: 'http://localhost:5000/api/posts/999999',",
+              "    method: 'GET'",
+              "}, function (err, res) {",
+              "    pm.test(\"Get Single Post Non-existent - Status code is 404\", function () { pm.expect(res.code).to.eql(404); });",
+              "    pm.test(\"Get Single Post Non-existent - Error code 113\", function () {",
+              "        const json = res.json();",
+              "        pm.expect(json.errCode).to.eql(113);",
+              "    });",
+              "    // Invalid ID (400)",
+              "    pm.sendRequest({",
+              "        url: 'http://localhost:5000/api/posts/invalid',",
+              "        method: 'GET'",
+              "    }, function (err, res) {",
+              "        pm.test(\"Get Single Post Invalid ID - Status code is 400\", function () { pm.expect(res.code).to.eql(400); });",
+              "        pm.test(\"Get Single Post Invalid ID - Error code 112\", function () {",
+              "            const json = res.json();",
+              "            pm.expect(json.errCode).to.eql(112);",
+              "        });",
+              "    });",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/posts/{{postId}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts",
+            "{{postId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "7. Update Post - PUT /api/posts/:id (Owner)",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const ts = Date.now();",
+              "pm.collectionVariables.set(\"updatedTitle\", \"Updated Post \" + ts);",
+              "pm.collectionVariables.set(\"updatedContent\", \"This post was updated at \" + new Date().toISOString());"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Update Post - Status code is 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Update Post - Response has updated post\", function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.message).to.eql(\"Post updated successfully\");",
+              "    pm.expect(json.post.title).to.eql(pm.collectionVariables.get(\"updatedTitle\"));",
+              "    pm.expect(json.post.content).to.eql(pm.collectionVariables.get(\"updatedContent\"));",
+              "});",
+              "",
+              "// Update without Token (401)",
+              "pm.sendRequest({",
+              "    url: 'http://localhost:5000/api/posts/' + pm.collectionVariables.get(\"postId\"),",
+              "    method: 'PUT',",
+              "    header: { 'Content-Type': 'application/json' },",
+              "    body: { mode: 'raw', raw: JSON.stringify({ title: \"No Token Update\", content: \"Should fail\" }) }",
+              "}, function (err, res) {",
+              "    pm.test(\"Update Post No Token - Status code is 401\", function () { pm.expect(res.code).to.eql(401); });",
+              "    pm.test(\"Update Post No Token - Error code 200\", function () {",
+              "        const json = res.json();",
+              "        pm.expect(json.errCode).to.eql(200);",
+              "    });",
+              "    // Update Missing Title (400)",
+              "    pm.sendRequest({",
+              "        url: 'http://localhost:5000/api/posts/' + pm.collectionVariables.get(\"postId\"),",
+              "        method: 'PUT',",
+              "        header: { 'Authorization': 'Bearer ' + pm.collectionVariables.get(\"authToken\"), 'Content-Type': 'application/json' },",
+              "        body: { mode: 'raw', raw: JSON.stringify({ content: \"Missing title\" }) }",
+              "    }, function (err, res) {",
+              "        pm.test(\"Update Post Missing Title - Status code is 400\", function () { pm.expect(res.code).to.eql(400); });",
+              "        pm.test(\"Update Post Missing Title - Error code 141\", function () {",
+              "            const json = res.json();",
+              "            pm.expect(json.errCode).to.eql(141);",
+              "        });",
+              "    });",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{authToken}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"{{updatedTitle}}\",\n  \"content\": \"{{updatedContent}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/posts/{{postId}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts",
+            "{{postId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "8. Register Admin - POST /api/maruf/auth/register (Admin)",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const ts = Date.now();",
+              "const rand = Math.floor(Math.random()*100000);",
+              "const base = ts + \"_\" + rand;",
+              "const adminUsername = \"Admin_\" + base;",
+              "const adminEmail = \"Admin_\" + base + \"@Example.COM\";",
+              "const adminPassword = \"Admin123!\";",
+              "pm.collectionVariables.set(\"adminUsername\", adminUsername);",
+              "pm.collectionVariables.set(\"adminEmail\", adminEmail);",
+              "pm.collectionVariables.set(\"adminPassword\", adminPassword);",
+              "console.log(\"Generated admin user:\", adminUsername, adminEmail);"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Register Admin - Status code is 201\", function () { pm.response.to.have.status(201); });",
+              "pm.test(\"Register Admin - User has admin role\", function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.user.role).to.eql(\"admin\");",
+              "});",
+              "pm.test(\"Register Admin - Save admin token\", function () {",
+              "    const json = pm.response.json();",
+              "    if (json.token) pm.collectionVariables.set(\"adminToken\", json.token);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"{{adminUsername}}\",\n  \"email\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\",\n  \"role\": \"admin\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/maruf/auth/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "maruf",
+            "auth",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "9. Login Admin - POST /api/maruf/auth/login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Login Admin - Status code is 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Login Admin - Response has admin user\", function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.message).to.eql(\"Login successful\");",
+              "    pm.expect(json.user.role).to.eql(\"admin\");",
+              "    pm.expect(json).to.have.property(\"token\");",
+              "});",
+              "pm.test(\"Login Admin - Save admin token\", function () {",
+              "    const json = pm.response.json();",
+              "    if (json.token) pm.collectionVariables.set(\"adminToken\", json.token);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/maruf/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "maruf",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "10. Delete Post - DELETE /api/posts/:id (Admin Only)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Delete Post Admin - Status code is 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Delete Post Admin - Post deleted successfully\", function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.message).to.eql(\"Post deleted successfully\");",
+              "});",
+              "",
+              "// Delete without Token (401)",
+              "pm.sendRequest({",
+              "    url: 'http://localhost:5000/api/posts/' + pm.collectionVariables.get(\"postId\"),",
+              "    method: 'DELETE'",
+              "}, function (err, res) {",
+              "    pm.test(\"Delete Post No Token - Status code is 401\", function () { pm.expect(res.code).to.eql(401); });",
+              "    pm.test(\"Delete Post No Token - Error code 200\", function () {",
+              "        const json = res.json();",
+              "        pm.expect(json.errCode).to.eql(200);",
+              "    });",
+              "    // Delete with Regular User Token (403)",
+              "    pm.sendRequest({",
+              "        url: 'http://localhost:5000/api/posts/' + pm.collectionVariables.get(\"postId\"),",
+              "        method: 'DELETE',",
+              "        header: { 'Authorization': 'Bearer ' + pm.collectionVariables.get(\"authToken\") }",
+              "    }, function (err, res) {",
+              "        pm.test(\"Delete Post Regular User - Status code is 403\", function () { pm.expect(res.code).to.eql(403); });",
+              "        pm.test(\"Delete Post Regular User - Error code 203\", function () {",
+              "            const json = res.json();",
+              "            pm.expect(json.errCode).to.eql(203);",
+              "            pm.expect(json.errMsg).to.eql(\"Forbidden: Admin access required\");",
+              "        });",
+              "        // Delete with Invalid ID (400)",
+              "        pm.sendRequest({",
+              "            url: 'http://localhost:5000/api/posts/invalid',",
+              "            method: 'DELETE',",
+              "            header: { 'Authorization': 'Bearer ' + pm.collectionVariables.get(\"adminToken\") }",
+              "        }, function (err, res) {",
+              "            pm.test(\"Delete Post Invalid ID - Status code is 400\", function () { pm.expect(res.code).to.eql(400); });",
+              "            pm.test(\"Delete Post Invalid ID - Error code 131\", function () {",
+              "                const json = res.json();",
+              "                pm.expect(json.errCode).to.eql(131);",
+              "            });",
+              "            // Delete Non-existent Post (404)",
+              "            pm.sendRequest({",
+              "                url: 'http://localhost:5000/api/posts/999999',",
+              "                method: 'DELETE',",
+              "                header: { 'Authorization': 'Bearer ' + pm.collectionVariables.get(\"adminToken\") }",
+              "            }, function (err, res) {",
+              "                pm.test(\"Delete Post Non-existent - Status code is 404\", function () { pm.expect(res.code).to.eql(404); });",
+              "                pm.test(\"Delete Post Non-existent - Error code 132\", function () {",
+              "                    const json = res.json();",
+              "                    pm.expect(json.errCode).to.eql(132);",
+              "                });",
+              "            });",
+              "        });",
+              "    });",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{adminToken}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/posts/{{postId}}",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts",
+            "{{postId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "authToken",
+      "value": ""
+    },
+    {
+      "key": "adminToken",
+      "value": ""
+    },
+    {
+      "key": "adminUsername",
+      "value": ""
+    },
+    {
+      "key": "adminEmail",
+      "value": ""
+    },
+    {
+      "key": "adminPassword",
+      "value": ""
+    },
+    {
+      "key": "postId",
+      "value": ""
+    },
+    {
+      "key": "postTitle",
+      "value": ""
+    },
+    {
+      "key": "postContent",
+      "value": ""
+    },
+    {
+      "key": "updatedTitle",
+      "value": ""
+    },
+    {
+      "key": "updatedContent",
+      "value": ""
+    },
+    {
+      "key": "testUsername",
+      "value": ""
+    },
+    {
+      "key": "testUsernameLower",
+      "value": ""
+    },
+    {
+      "key": "testEmail",
+      "value": ""
+    },
+    {
+      "key": "testEmailLower",
+      "value": ""
+    },
+    {
+      "key": "testPassword",
+      "value": ""
+    },
+    {
+      "key": "userId",
+      "value": ""
+    },
+    {
+      "key": "bearer_token_1do0",
+      "secret": true
+    },
+    {
+      "key": "bearer_token_0ocl",
+      "secret": true
+    },
+    {
+      "key": "bearer_token_0kvb",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_10iw",
+      "secret": true
+    }
+  ]
+}
