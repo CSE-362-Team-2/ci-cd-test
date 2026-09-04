@@ -36,6 +36,8 @@ services:
       DB_NAME: ${POSTGRES_DB_NAME:-myappdb_dev}
       DB_USER: ${POSTGRES_USER:-postgres}
       DB_PASSWORD: ${POSTGRES_PASSWORD:-devpassword123}
+      JWT_SECRET: ${JWT_SECRET:-dev_jwt_secret_change_in_production}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
 
   db:
     image: postgres:17-alpine
