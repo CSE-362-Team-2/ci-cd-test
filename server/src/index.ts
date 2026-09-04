@@ -1,18 +1,25 @@
+import "dotenv/config";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 import postRoutes from "./routes/postRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 import { initDb } from "./config/db.js";
 
 const app = new Hono();
 
+// Initialize database
 initDb();
+
+// Middleware
 app.use(logger());
 
 // Healthcheck
 app.get("/", (c) => c.text("Forum API server running..."));
 
+// Routes
 app.route("/api/posts", postRoutes);
+app.route("/api/maruf/auth", authRoutes);
 
 const port = Number(process.env.PORT) || 5000;
 
