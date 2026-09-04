@@ -1,19 +1,24 @@
 import { Hono } from "hono";
-
-
-
-import { createPost, getAllPosts, getPostById, deletePost ,updatePost } from "../controllers/postController.js";
+import {
+  createPost,
+  getAllPosts,
+  getPostById,
+  updatePost,
+  deletePost,
+} from "../controllers/postController.js";
+import { authMiddleware, adminMiddleware } from "../middleware/authMiddleware.js";
 
 const postRoutes = new Hono();
 
-// CREATE
-postRoutes.post("/", createPost);
-// READ
+// Public routes
 postRoutes.get("/", getAllPosts);
 postRoutes.get("/:id", getPostById);
-// UPDATE
-postRoutes.put("/:id", updatePost);
-// DELETE
-postRoutes.delete("/:id", deletePost);
+
+// Protected routes (User or Admin)
+postRoutes.post("/", authMiddleware, createPost);
+postRoutes.put("/:id", authMiddleware, updatePost);
+
+// Protected routes (Admin only)
+postRoutes.delete("/:id", authMiddleware, adminMiddleware, deletePost);
 
 export default postRoutes;
