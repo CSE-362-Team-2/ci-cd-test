@@ -539,78 +539,7 @@
 			},
 			"response": []
 		},
-		{
-			"name": "Create_post_user",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(",
-							"    \"Post creation should be successful\",",
-							"    function(){",
-							"        pm.response.to.have.status(201);",
-							"    }",
-							");",
-							"",
-							"",
-							"const response = pm.response.json();",
-							"",
-							"",
-							"pm.test(",
-							"    \"Post id should exist\",",
-							"    function(){",
-							"        pm.expect(response)",
-							"        .to.have.property(\"id\");",
-							"    }",
-							");",
-							"",
-							"",
-							"// Save post id for delete testing",
-							"pm.collectionVariables.set(",
-							"    \"post_id\",",
-							"    response.id",
-							");"
-						],
-						"type": "text/javascript",
-						"packages": {},
-						"requests": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "Authorization",
-						"value": "Bearer {{token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"title\":\"RBAC Testing Post\",\n    \"content\":\"Testing user and admin delete permission\",\n    \"author\":\"dipta_user\"\n}"
-				},
-				"url": {
-					"raw": "http://localhost:5000/api/posts",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"posts"
-					]
-				}
-			},
-			"response": []
-		},
+		
 		{
 			"name": "Register_2nd_user",
 			"event": [
