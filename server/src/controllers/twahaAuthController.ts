@@ -83,8 +83,9 @@ export const register = async (c: Context) => {
 
     const token = signToken({
       id: newUser.id,
-      username: newUser.username,
+      name: newUser.username,
       email: newUser.email,
+      role: (newUser.role == 'ADMIN') ? "admin" : "user"
     });
 
     return c.json(
