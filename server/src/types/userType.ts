@@ -2,9 +2,10 @@ export type UserRole = "user" | "admin";
 
 export type User = {
   id: number;
-  username: string;
+  name: string;
   email: string;
   password: string;
+  role: UserRole;
   created_at: Date;
   updated_at: Date;
 };

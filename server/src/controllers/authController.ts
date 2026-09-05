@@ -11,24 +11,26 @@ export const register = async (c: Context) => {
       return c.json({ errCode: 210, errMsg: "Invalid JSON body" }, 400);
     }
 
-    const { username, email, password } = body;
+    const { name, email, password, role } = body;
 
-    const cleanUsername = typeof username === "string" ? username.trim() : "";
+    const cleanName = typeof name === "string" ? name.trim() : "";
     const cleanEmail = typeof email === "string" ? email.trim() : "";
     const cleanPassword = typeof password === "string" ? password : "";
+    const cleanRole =
+      typeof role === "string" ? role.trim().toLowerCase() : "user";
 
-    if (!cleanUsername) {
-      return c.json({ errCode: 211, errMsg: "Username is required" }, 400);
+    if (!cleanName) {
+      return c.json({ errCode: 211, errMsg: "Name is required" }, 400);
     }
-    if (cleanUsername.length < 3) {
+    if (cleanName.length < 3) {
       return c.json(
-        { errCode: 212, errMsg: "Username must be at least 3 characters" },
+        { errCode: 212, errMsg: "Name must be at least 3 characters" },
         400,
       );
     }
-    if (cleanUsername.length > 100) {
+    if (cleanName.length > 100) {
       return c.json(
-        { errCode: 213, errMsg: "Username must be at most 100 characters" },
+        { errCode: 213, errMsg: "Name must be at most 100 characters" },
         400,
       );
     }
@@ -57,34 +59,31 @@ export const register = async (c: Context) => {
       );
     }
 
-    const existing = await UserModel.findByEmailOrUsername(
-      cleanEmail,
-      cleanUsername,
-    );
+    if (cleanRole !== "user" && cleanRole !== "admin") {
+      return c.json(
+        { errCode: 220, errMsg: "Role must be either 'user' or 'admin'" },
+        400,
+      );
+    }
+
+    const existing = await UserModel.findByEmail(cleanEmail);
     if (existing) {
-      if (existing.email === cleanEmail) {
-        return c.json(
-          { errCode: 219, errMsg: "Email already registered" },
-          409,
-        );
-      }
-      if (existing.username === cleanUsername) {
-        return c.json({ errCode: 220, errMsg: "Username already taken" }, 409);
-      }
-      return c.json({ errCode: 221, errMsg: "User already exists" }, 409);
+      return c.json({ errCode: 219, errMsg: "Email already registered" }, 409);
     }
 
     const hashedPassword = await bcrypt.hash(cleanPassword, 10);
     const newUser = await UserModel.create(
-      cleanUsername,
+      cleanName,
       cleanEmail,
       hashedPassword,
+      cleanRole,
     );
 
     const token = signToken({
       id: newUser.id,
-      username: newUser.username,
+      name: newUser.name,
       email: newUser.email,
+      role: newUser.role as "user" | "admin",
     });
 
     return c.json(
@@ -115,45 +114,41 @@ export const login = async (c: Context) => {
       return c.json({ errCode: 230, errMsg: "Invalid JSON body" }, 400);
     }
 
-    // Allow login with email or username via "email" or "username" or "identifier" (case-sensitive)
-    const identifierRaw = body.email ?? body.username ?? body.identifier ?? "";
-    const passwordRaw = body.password ?? "";
+    const { email, password } = body;
 
-    const identifier =
-      typeof identifierRaw === "string" ? identifierRaw.trim() : "";
-    const password = typeof passwordRaw === "string" ? passwordRaw : "";
+    const cleanEmail = typeof email === "string" ? email.trim() : "";
+    const cleanPassword = typeof password === "string" ? password : "";
 
-    if (!identifier) {
-      return c.json(
-        { errCode: 231, errMsg: "Email or username is required" },
-        400,
-      );
+    if (!cleanEmail) {
+      return c.json({ errCode: 231, errMsg: "Email is required" }, 400);
     }
-    if (!password) {
+    if (!cleanPassword) {
       return c.json({ errCode: 232, errMsg: "Password is required" }, 400);
     }
 
-    const user = await UserModel.findByLoginIdentifier(identifier);
+    const user = await UserModel.findByEmail(cleanEmail);
 
     if (!user) {
       return c.json({ errCode: 233, errMsg: "Invalid credentials" }, 401);
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(cleanPassword, user.password);
     if (!isMatch) {
       return c.json({ errCode: 233, errMsg: "Invalid credentials" }, 401);
     }
 
     const token = signToken({
       id: user.id,
-      username: user.username,
+      name: user.name,
       email: user.email,
+      role: user.role as "user" | "admin",
     });
 
     const safeUser = {
       id: user.id,
-      username: user.username,
+      name: user.name,
       email: user.email,
+      role: user.role,
       created_at: user.created_at,
       updated_at: user.updated_at,
     };
@@ -175,7 +170,7 @@ export const login = async (c: Context) => {
   }
 };
 
-// GET /api/anindya/auth/me - protected
+// GET /api/anindya/auth/me - protected (any authenticated user)
 export const getMe = async (c: Context) => {
   try {
     const payload = c.get("user");
@@ -190,5 +185,57 @@ export const getMe = async (c: Context) => {
   } catch (error) {
     console.error("GetMe error:", error);
     return c.json({ errCode: 236, errMsg: "Failed to fetch user" }, 500);
+  }
+};
+
+// GET /api/anindya/auth/admin - protected + admin only
+export const getAdminData = async (c: Context) => {
+  try {
+    const payload = c.get("user");
+    if (!payload) {
+      return c.json({ errCode: 200, errMsg: "Unauthorized" }, 401);
+    }
+    if (payload.role !== "admin") {
+      return c.json(
+        { errCode: 240, errMsg: "Forbidden: Admin access required" },
+        403,
+      );
+    }
+    const user = await UserModel.findById(payload.id);
+    if (!user) {
+      return c.json({ errCode: 235, errMsg: "User not found" }, 404);
+    }
+    return c.json(
+      {
+        message: "Admin access granted",
+        user,
+        adminData: "Sensitive admin-only data",
+      },
+      200,
+    );
+  } catch (error) {
+    console.error("GetAdminData error:", error);
+    return c.json({ errCode: 241, errMsg: "Failed to fetch admin data" }, 500);
+  }
+};
+
+// GET /api/anindya/auth/users - protected + admin only
+export const getAllUsers = async (c: Context) => {
+  try {
+    const payload = c.get("user");
+    if (!payload) {
+      return c.json({ errCode: 200, errMsg: "Unauthorized" }, 401);
+    }
+    if (payload.role !== "admin") {
+      return c.json(
+        { errCode: 240, errMsg: "Forbidden: Admin access required" },
+        403,
+      );
+    }
+    const users = await UserModel.findAll();
+    return c.json({ users, count: users.length }, 200);
+  } catch (error) {
+    console.error("GetAllUsers error:", error);
+    return c.json({ errCode: 242, errMsg: "Failed to fetch users" }, 500);
   }
 };
