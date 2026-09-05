@@ -4,14 +4,9 @@ import { Pool } from "pg";
 export const pool = new Pool({
   host: process.env.DB_HOST || "127.0.0.1",
   port: Number(process.env.DB_PORT || process.env.POSTGRES_PORT || 5432),
-  database:
-    process.env.DB_NAME || process.env.POSTGRES_DB_NAME || "myappdb_dev",
+  database: process.env.DB_NAME || process.env.POSTGRES_DB_NAME || "myappdb_dev",
   user: process.env.DB_USER || process.env.POSTGRES_USER || "postgres",
-  password:
-    process.env.DB_PASSWORD ||
-    process.env.POSTGRES_PASSWD ||
-    process.env.POSTGRES_PASSWORD ||
-    "devpassword123",
+  password: process.env.DB_PASSWORD || process.env.POSTGRES_PASSWORD || "devpassword123",
 });
 
 export const initDb = async () => {
@@ -37,13 +32,25 @@ export const initDb = async () => {
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'Asia/Dhaka')
     );
   `;
+
+  const marufUsersQuery = `
+    CREATE TABLE IF NOT EXISTS maruf_users (
+      id SERIAL PRIMARY KEY,
+      username VARCHAR(100) NOT NULL UNIQUE,
+      email VARCHAR(255) NOT NULL UNIQUE,
+      password VARCHAR(255) NOT NULL,
+      role VARCHAR(20) DEFAULT 'user',
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'Asia/Dhaka'),
+      updated_at TIMESTAMP WITH TIME ZONE DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'Asia/Dhaka')
+    );
+  `;
+
   try {
     await pool.query(postsQuery);
     await pool.query(anindyaUsersQuery);
-    console.log(
-      "Database initialized successfully (posts and anindya_users tables ready).",
-    );
+    await pool.query(marufUsersQuery);
+    console.log("Database initialized successfully.");
   } catch (err) {
-    console.error("Error initializing database table:", err);
+    console.error("Error initializing database tables:", err);
   }
 };
