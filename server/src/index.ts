@@ -4,6 +4,7 @@ import { Hono } from "hono";
 import { logger } from "hono/logger";
 import postRoutes from "./routes/postRoutes.js";
 import marufAuthRoutes from "./routes/marufAuthRoutes.js";
+import anindyaAuthRoutes from "./routes/authRoutes.js";
 import { initDb } from "./config/db.js";
 
 const app = new Hono();
@@ -19,7 +20,8 @@ app.get("/", (c) => c.text("Forum API server running..."));
 
 // Routes
 app.route("/api/posts", postRoutes);
-app.route("/api/maruf/auth", marufAuthRoutes);
+app.route("/api/maruf/auth", marufAuthRoutes);      // Your auth
+app.route("/api/anindya/auth", anindyaAuthRoutes);  // Anindya's auth
 
 const port = Number(process.env.PORT) || 5000;
 
