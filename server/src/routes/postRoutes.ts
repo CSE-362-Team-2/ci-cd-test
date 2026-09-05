@@ -1,23 +1,19 @@
 import { Hono } from "hono";
-import {
-  createPost,
-  getAllPosts,
-  getPostById,
-  updatePost,
-  deletePost,
-} from "../controllers/postController.js";
+
+
+
+import { createPost, getAllPosts, getPostById, deletePost ,updatePost } from "../controllers/postController.js";
 
 const postRoutes = new Hono();
 
-// Public routes
+// CREATE
+postRoutes.post("/", createPost);
+// READ
 postRoutes.get("/", getAllPosts);
 postRoutes.get("/:id", getPostById);
-
-// Protected routes (User or Admin)
-postRoutes.post("/", createPost);
+// UPDATE
 postRoutes.put("/:id", updatePost);
-
-// Protected routes (Admin only)
+// DELETE
 postRoutes.delete("/:id", deletePost);
 
 export default postRoutes;
