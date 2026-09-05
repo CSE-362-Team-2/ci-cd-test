@@ -377,7 +377,7 @@
           "script": {
             "type": "text/javascript",
             "exec": [
-              "pm.test(\"Me - Status code is 200\", function () { pm.response.to.have.status(200); });\npm.test(\"Me - Response has user object\", function () {\n    const json = pm.response.json();\n    pm.expect(json).to.have.property(\"user\");\n    const user = json.user;\n    pm.expect(user).to.have.property(\"id\");\n    pm.expect(user.username).to.eql(pm.collectionVariables.get(\"testUsername\"));\n    pm.expect(user.email).to.eql(pm.collectionVariables.get(\"testEmail\"));\n    pm.expect(user).to.have.property(\"created_at\");\n    pm.expect(user).to.have.property(\"updated_at\");\n    pm.expect(user).to.not.have.property(\"password\");\n});\npm.test(\"Me - User id matches expected\", function () {\n    const json = pm.response.json();\n    pm.expect(json.user.id).to.eql(parseInt(pm.collectionVariables.get(\"userId\")));\n});\n\n// --- Additional Me Tests ---\n// Missing Token (401)\npm.sendRequest({\n    url: 'http://localhost:5000/api/maruf/auth/me',\n    method: 'GET'\n}, function (err, res) {\n    pm.test(\"Me Missing Token - Status code is 401\", function () { pm.expect(res.code).to.eql(401); });\n    pm.test(\"Me Missing Token - Error code 200\", function () {\n        const json = res.json();\n        pm.expect(json.errCode).to.eql(200);\n    });\n    // Invalid Token (401)\n    pm.sendRequest({\n        url: 'http://localhost:5000/api/maruf/auth/me',\n        method: 'GET',\n        header: { \n        'Authorization': 'Bearer invalid.token.here'\n        }\n    }, function (err, res) {\n        pm.test(\"Me Invalid Token - Status code is 401\", function () { pm.expect(res.code).to.eql(401); });\n        pm.test(\"Me Invalid Token - Error code 201\", function () {\n            const json = res.json();\n            pm.expect(json.errCode).to.eql(201);\n        });\n        // Malformed Authorization Header - No Bearer Prefix (401)\n        pm.sendRequest({\n            url: 'http://localhost:5000/api/maruf/auth/me',\n            method: 'GET',\n            header: { 'Authorization': pm.collectionVariables.get(\"authToken\") }\n        }, function (err, res) {\n            pm.test(\"Me Malformed Header - Status code is 401\", function () { pm.expect(res.code).to.eql(401); });\n            pm.test(\"Me Malformed Header - Error code 200\", function () {\n                const json = res.json();\n                pm.expect(json.errCode).to.eql(200);\n            });\n            // Empty Bearer Token (401)\n            pm.sendRequest({\n                url: 'http://localhost:5000/api/maruf/auth/me',\n                method: 'GET',\n                header: { 'Authorization': 'Bearer ' }\n            }, function (err, res) {\n                pm.test(\"Me Empty Bearer - Status code is 401\", function () { pm.expect(res.code).to.eql(401); });\n                pm.test(\"Me Empty Bearer - Error code 200\", function () {\n                    const json = res.json();\n                    pm.expect(json.errCode).to.eql(200);\n                });\n            });\n        });\n    });\n});"
+              "pm.test(\"Me - Status code is 200\", function () { pm.response.to.have.status(200); });\npm.test(\"Me - Response has user object\", function () {\n    const json = pm.response.json();\n    pm.expect(json).to.have.property(\"user\");\n    const user = json.user;\n    pm.expect(user).to.have.property(\"id\");\n    pm.expect(user.username).to.eql(pm.collectionVariables.get(\"testUsername\"));\n    pm.expect(user.email).to.eql(pm.collectionVariables.get(\"testEmail\"));\n    pm.expect(user).to.have.property(\"created_at\");\n    pm.expect(user).to.have.property(\"updated_at\");\n    pm.expect(user).to.not.have.property(\"password\");\n});\npm.test(\"Me - User id matches expected\", function () {\n    const json = pm.response.json();\n    pm.expect(json.user.id).to.eql(parseInt(pm.collectionVariables.get(\"userId\")));\n});\n\n// --- Additional Me Tests ---\n\n// 1. Missing Token (401)\npm.sendRequest({\n    url: 'http://localhost:5000/api/maruf/auth/me',\n    method: 'GET'\n}, function (err, res) {\n    pm.test(\"Me Missing Token - Status code is 401\", function () { pm.expect(res.code).to.eql(401); });\n    pm.test(\"Me Missing Token - Error code 200\", function () {\n        const json = res.json();\n        pm.expect(json.errCode).to.eql(200);\n        pm.expect(json.errMsg).to.eql(\"Unauthorized: Missing or invalid token\");\n    });\n    \n    // 2. Malformed Authorization Header - No Bearer Prefix (401)\n    pm.sendRequest({\n        url: 'http://localhost:5000/api/maruf/auth/me',\n        method: 'GET',\n        header: { \n            'Authorization': pm.collectionVariables.get(\"authToken\") \n        }\n    }, function (err, res) {\n        pm.test(\"Me Malformed Header - Status code is 401\", function () { \n            pm.expect(res.code).to.eql(401); \n        });\n        pm.test(\"Me Malformed Header - Error code 200\", function () {\n            const json = res.json();\n            pm.expect(json.errCode).to.eql(200);\n            pm.expect(json.errMsg).to.eql(\"Unauthorized: Missing or invalid token\");\n        });\n        \n        // 3. Empty Bearer Token (401)\n        pm.sendRequest({\n            url: 'http://localhost:5000/api/maruf/auth/me',\n            method: 'GET',\n            header: { \n                'Authorization': 'Bearer ' \n            }\n        }, function (err, res) {\n            pm.test(\"Me Empty Bearer - Status code is 401\", function () { \n                pm.expect(res.code).to.eql(401); \n            });\n            pm.test(\"Me Empty Bearer - Error code 200\", function () {\n                const json = res.json();\n                pm.expect(json.errCode).to.eql(200);\n                pm.expect(json.errMsg).to.eql(\"Unauthorized: Missing or invalid token\");\n            });\n        });\n    });\n});"
             ]
           }
         }
@@ -406,11 +406,176 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "4. Register Admin - POST /api/maruf/auth/register (Admin)",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const ts = Date.now();",
+              "const rand = Math.floor(Math.random()*100000);",
+              "const base = ts + \"_\" + rand;",
+              "const adminUsername = \"Admin_\" + base;",
+              "const adminEmail = \"Admin_\" + base + \"@Example.COM\";",
+              "const adminPassword = \"Admin123!\";",
+              "pm.collectionVariables.set(\"adminUsername\", adminUsername);",
+              "pm.collectionVariables.set(\"adminEmail\", adminEmail);",
+              "pm.collectionVariables.set(\"adminPassword\", adminPassword);",
+              "console.log(\"Generated admin user:\", adminUsername, adminEmail);"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Register Admin - Status code is 201\", function () { pm.response.to.have.status(201); });",
+              "pm.test(\"Register Admin - User has admin role\", function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json.user.role).to.eql(\"admin\");",
+              "});",
+              "pm.test(\"Register Admin - Save admin token\", function () {",
+              "    const json = pm.response.json();",
+              "    if (json.token) pm.collectionVariables.set(\"adminToken\", json.token);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"{{adminUsername}}\",\n  \"email\": \"{{adminEmail}}\",\n  \"password\": \"{{adminPassword}}\",\n  \"role\": \"admin\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/maruf/auth/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "maruf",
+            "auth",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "5. Admin Only - GET /api/maruf/auth/admin-only",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Admin Only - Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\npm.test(\"Admin Only - Returns admin message\", function () {\n    const json = pm.response.json();\n    pm.expect(json.message).to.eql(\"Admin access granted!\");\n});\npm.test(\"Admin Only - Returns user data\", function () {\n    const json = pm.response.json();\n    pm.expect(json.user).to.have.property(\"id\");\n    pm.expect(json.user).to.have.property(\"username\");\n    pm.expect(json.user).to.have.property(\"role\");\n});\n\n// --- Additional Admin Only Tests ---\n\n// Admin Only with Regular User Token (403)\npm.sendRequest({\n    url: 'http://localhost:5000/api/maruf/auth/admin-only',\n    method: 'GET',\n    header: { 'Authorization': 'Bearer ' + pm.collectionVariables.get('authToken') }\n}, function (err, res) {\n    pm.test(\"Admin Only with User Token - Status code is 403\", function () {\n        pm.expect(res.code).to.eql(403);\n    });\n    pm.test(\"Admin Only with User Token - Error code 203\", function () {\n        const json = res.json();\n        pm.expect(json.errCode).to.eql(203);\n    });\n    // Admin Only with No Token (401)\n    pm.sendRequest({\n        url: 'http://localhost:5000/api/maruf/auth/admin-only',\n        method: 'GET'\n    }, function (err, res) {\n        pm.test(\"Admin Only No Token - Status code is 401\", function () {\n            pm.expect(res.code).to.eql(401);\n        });\n        pm.test(\"Admin Only No Token - Error code 200\", function () {\n            const json = res.json();\n            pm.expect(json.errCode).to.eql(200);\n        });\n    });\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{adminToken}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/maruf/auth/admin-only",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "maruf",
+            "auth",
+            "admin-only"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "6. Users List - GET /api/maruf/auth/users (Admin Only)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Users List - Status code is 200\", function () {\n    pm.response.to.have.status(200);\n});\npm.test(\"Users List - Returns users array\", function () {\n    const json = pm.response.json();\n    pm.expect(json).to.have.property(\"users\");\n    pm.expect(json).to.have.property(\"count\");\n    pm.expect(Array.isArray(json.users)).to.be.true;\n});\n\n// --- Additional Users List Tests ---\n\n// Users List with Regular User Token (403)\npm.sendRequest({\n    url: 'http://localhost:5000/api/maruf/auth/users',\n    method: 'GET',\n    header: { 'Authorization': 'Bearer ' + pm.collectionVariables.get('authToken') }\n}, function (err, res) {\n    pm.test(\"Users List with User Token - Status code is 403\", function () {\n        pm.expect(res.code).to.eql(403);\n    });\n    pm.test(\"Users List with User Token - Error code 203\", function () {\n        const json = res.json();\n        pm.expect(json.errCode).to.eql(203);\n    });\n    // Users List with No Token (401)\n    pm.sendRequest({\n        url: 'http://localhost:5000/api/maruf/auth/users',\n        method: 'GET'\n    }, function (err, res) {\n        pm.test(\"Users List No Token - Status code is 401\", function () {\n            pm.expect(res.code).to.eql(401);\n        });\n        pm.test(\"Users List No Token - Error code 200\", function () {\n            const json = res.json();\n            pm.expect(json.errCode).to.eql(200);\n        });\n    });\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{adminToken}}"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/maruf/auth/users",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "maruf",
+            "auth",
+            "users"
+          ]
+        }
+      },
+      "response": []
     }
   ],
   "variable": [
     {
       "key": "authToken",
+      "value": ""
+    },
+    {
+      "key": "adminToken",
+      "value": ""
+    },
+    {
+      "key": "adminUsername",
+      "value": ""
+    },
+    {
+      "key": "adminEmail",
+      "value": ""
+    },
+    {
+      "key": "adminPassword",
       "value": ""
     },
     {
