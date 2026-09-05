@@ -21,6 +21,18 @@ export const initDb = async () => {
     );
   `;
 
+  const anindyaUsersQuery = `
+    CREATE TABLE IF NOT EXISTS anindya_users (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(100) NOT NULL,
+      email VARCHAR(255) NOT NULL UNIQUE,
+      password VARCHAR(255) NOT NULL,
+      role VARCHAR(20) NOT NULL DEFAULT 'user' CHECK (role IN ('user', 'admin')),
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'Asia/Dhaka'),
+      updated_at TIMESTAMP WITH TIME ZONE DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'Asia/Dhaka')
+    );
+  `;
+
   const marufUsersQuery = `
     CREATE TABLE IF NOT EXISTS maruf_users (
       id SERIAL PRIMARY KEY,
@@ -35,6 +47,7 @@ export const initDb = async () => {
 
   try {
     await pool.query(postsQuery);
+    await pool.query(anindyaUsersQuery);
     await pool.query(marufUsersQuery);
     console.log("Database initialized successfully.");
   } catch (err) {
