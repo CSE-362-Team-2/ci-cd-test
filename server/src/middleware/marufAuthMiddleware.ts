@@ -1,5 +1,6 @@
 import type { Context, Next } from "hono";
 import { verifyToken } from "../utils/marufJwt.js";
+import type { JwtPayload } from "../types/marufUserType.js";  // ← Import your type
 
 export const authMiddleware = async (c: Context, next: Next) => {
   const authHeader = c.req.header("Authorization") || c.req.header("authorization");
@@ -17,7 +18,7 @@ export const authMiddleware = async (c: Context, next: Next) => {
   }
 
   try {
-    const payload = verifyToken(token);
+    const payload = verifyToken(token) as JwtPayload;
     c.set("user", payload);
     await next();
   } catch (err) {
@@ -30,7 +31,7 @@ export const authMiddleware = async (c: Context, next: Next) => {
 
 // Role-based middleware - Admin only
 export const adminMiddleware = async (c: Context, next: Next) => {
-  const user = c.get("user");
+  const user = c.get("user") as JwtPayload;
   if (!user) {
     return c.json({ errCode: 202, errMsg: "Unauthorized" }, 401);
   }
@@ -45,7 +46,7 @@ export const adminMiddleware = async (c: Context, next: Next) => {
 
 // Role-based middleware - User or Admin
 export const userOrAdminMiddleware = async (c: Context, next: Next) => {
-  const user = c.get("user");
+  const user = c.get("user") as JwtPayload;
   if (!user) {
     return c.json({ errCode: 202, errMsg: "Unauthorized" }, 401);
   }
