@@ -9,9 +9,13 @@ import {
 import { diptaAuthMiddleware } from "../middleware/diptaAuthMiddleware.js";
 
 import { diptaRoleMiddleware } from "../middleware/diptaRoleMiddleware.js";
+import type { DiptaJwtPayload } from "../types/diptaUserType.js";
 
-
-const diptaAuthRoutes = new Hono();
+const diptaAuthRoutes = new Hono<{
+  Variables: {
+    diptaUser: DiptaJwtPayload;
+  };
+}>();
 
 diptaAuthRoutes.post(
   "/register",
