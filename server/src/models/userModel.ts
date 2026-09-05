@@ -3,16 +3,17 @@ import type { SafeUser, User } from "../types/userType.js";
 
 export const UserModel = {
   async create(
-    username: string,
+    name: string,
     email: string,
     hashedPassword: string,
+    role: string = "user",
   ): Promise<SafeUser> {
     const query = `
-      INSERT INTO anindya_users (username, email, password)
-      VALUES ($1, $2, $3)
-      RETURNING id, username, email, created_at, updated_at
+      INSERT INTO anindya_users (name, email, password, role)
+      VALUES ($1, $2, $3, $4)
+      RETURNING id, name, email, role, created_at, updated_at
     `;
-    const res = await pool.query(query, [username, email, hashedPassword]);
+    const res = await pool.query(query, [name, email, hashedPassword, role]);
     return res.rows[0];
   },
 
@@ -22,31 +23,15 @@ export const UserModel = {
     return res.rows[0] || null;
   },
 
-  async findByUsername(username: string): Promise<User | null> {
-    const query = `SELECT * FROM anindya_users WHERE username = $1`;
-    const res = await pool.query(query, [username]);
-    return res.rows[0] || null;
-  },
-
-  async findByEmailOrUsername(
-    email: string,
-    username: string,
-  ): Promise<User | null> {
-    const query = `SELECT * FROM anindya_users WHERE email = $1 OR username = $2`;
-    const res = await pool.query(query, [email, username]);
-    return res.rows[0] || null;
-  },
-
   async findById(id: number): Promise<SafeUser | null> {
-    const query = `SELECT id, username, email, created_at, updated_at FROM anindya_users WHERE id = $1`;
+    const query = `SELECT id, name, email, role, created_at, updated_at FROM anindya_users WHERE id = $1`;
     const res = await pool.query(query, [id]);
     return res.rows[0] || null;
   },
 
-  async findByLoginIdentifier(identifier: string): Promise<User | null> {
-    // allow login with either email or username (case-sensitive)
-    const query = `SELECT * FROM anindya_users WHERE email = $1 OR username = $1`;
-    const res = await pool.query(query, [identifier]);
-    return res.rows[0] || null;
+  async findAll(): Promise<SafeUser[]> {
+    const query = `SELECT id, name, email, role, created_at, updated_at FROM anindya_users ORDER BY created_at DESC`;
+    const res = await pool.query(query);
+    return res.rows;
   },
 };
