@@ -842,3 +842,6 @@ snapshots:
   undici-types@8.3.0: {}
 
   xtend@4.0.2: {}
+
+onlyBuiltDependencies:
+  - bcrypt
