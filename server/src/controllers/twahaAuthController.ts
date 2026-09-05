@@ -147,8 +147,9 @@ export const login = async (c: Context) => {
 
     const token = signToken({
       id: user.id,
-      username: user.username,
+      name: user.username,
       email: user.email,
+      role: (user.role == 'ADMIN') ? "admin" : "user"
     });
 
     const loggedInUserInfo = {
