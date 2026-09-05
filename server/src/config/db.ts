@@ -4,14 +4,9 @@ import { Pool } from "pg";
 export const pool = new Pool({
   host: process.env.DB_HOST || "127.0.0.1",
   port: Number(process.env.DB_PORT || process.env.POSTGRES_PORT || 5432),
-  database:
-    process.env.DB_NAME || process.env.POSTGRES_DB_NAME || "myappdb_dev",
+  database: process.env.DB_NAME || process.env.POSTGRES_DB_NAME || "myappdb_dev",
   user: process.env.DB_USER || process.env.POSTGRES_USER || "postgres",
-  password:
-    process.env.DB_PASSWORD ||
-    process.env.POSTGRES_PASSWD ||
-    process.env.POSTGRES_PASSWORD ||
-    "devpassword123",
+  password: process.env.DB_PASSWORD || process.env.POSTGRES_PASSWORD || "devpassword123",
 });
 
 export const initDb = async () => {
@@ -21,7 +16,6 @@ export const initDb = async () => {
       title VARCHAR(255) NOT NULL,
       content TEXT NOT NULL,
       author VARCHAR(100) NOT NULL,
-      user_id INTEGER,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'Asia/Dhaka'),
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'Asia/Dhaka')
     );

@@ -6,7 +6,6 @@ import {
   updatePost,
   deletePost,
 } from "../controllers/postController.js";
-import { authMiddleware, adminMiddleware } from "../middleware/authMiddleware.js";
 
 const postRoutes = new Hono();
 
@@ -15,10 +14,10 @@ postRoutes.get("/", getAllPosts);
 postRoutes.get("/:id", getPostById);
 
 // Protected routes (User or Admin)
-postRoutes.post("/", authMiddleware, createPost);
-postRoutes.put("/:id", authMiddleware, updatePost);
+postRoutes.post("/", createPost);
+postRoutes.put("/:id", updatePost);
 
 // Protected routes (Admin only)
-postRoutes.delete("/:id", authMiddleware, adminMiddleware, deletePost);
+postRoutes.delete("/:id", deletePost);
 
 export default postRoutes;

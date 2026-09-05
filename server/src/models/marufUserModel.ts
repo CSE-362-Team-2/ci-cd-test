@@ -1,7 +1,7 @@
 import { pool } from "../config/db.js";
-import type { SafeUser, User } from "../types/userType.js";
+import type { SafeUser, User } from "../types/marufUserType.js";
 
-export const UserModel = {
+export const MarufUserModel = {
   async create(
     username: string,
     email: string,

@@ -1,7 +1,7 @@
 import type { Context } from "hono";
 import bcrypt from "bcryptjs";
-import { UserModel } from "../models/userModel.js";
-import { signToken } from "../utils/jwt.js";
+import { MarufUserModel } from "../models/marufUserModel.js";
+import { signToken } from "../utils/marufJwt.js";
 
 // POST /api/maruf/auth/register
 export const register = async (c: Context) => {
@@ -59,7 +59,7 @@ export const register = async (c: Context) => {
     }
 
     // Check existing user
-    const existing = await UserModel.findByEmailOrUsername(cleanEmail, cleanUsername);
+    const existing = await MarufUserModel.findByEmailOrUsername(cleanEmail, cleanUsername);
     if (existing) {
       if (existing.email === cleanEmail) {
         return c.json(
@@ -73,7 +73,7 @@ export const register = async (c: Context) => {
     }
 
     const hashedPassword = await bcrypt.hash(cleanPassword, 10);
-    const newUser = await UserModel.create(
+    const newUser = await MarufUserModel.create(
       cleanUsername,
       cleanEmail,
       hashedPassword,
@@ -130,7 +130,7 @@ export const login = async (c: Context) => {
       return c.json({ errCode: 232, errMsg: "Password is required" }, 400);
     }
 
-    const user = await UserModel.findByLoginIdentifier(identifier);
+    const user = await MarufUserModel.findByLoginIdentifier(identifier);
     if (!user) {
       return c.json({ errCode: 233, errMsg: "Invalid credentials" }, 401);
     }
@@ -181,7 +181,7 @@ export const getMe = async (c: Context) => {
       return c.json({ errCode: 200, errMsg: "Unauthorized" }, 401);
     }
 
-    const user = await UserModel.findById(payload.id);
+    const user = await MarufUserModel.findById(payload.id);
     if (!user) {
       return c.json({ errCode: 235, errMsg: "User not found" }, 404);
     }

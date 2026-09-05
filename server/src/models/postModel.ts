@@ -5,7 +5,6 @@ export interface Post {
   title: string;
   content: string;
   author: string;
-  user_id?: number;
   created_at: Date;
   updated_at: Date;
 }
@@ -23,13 +22,13 @@ export const PostModel = {
     return res.rows[0] || null;
   },
 
-  async create(title: string, content: string, author: string, userId?: number): Promise<Post> {
+  async create(title: string, content: string, author: string): Promise<Post> {
     const query = `
-      INSERT INTO posts (title, content, author, user_id)
-      VALUES ($1, $2, $3, $4)
+      INSERT INTO posts (title, content, author)
+      VALUES ($1, $2, $3)
       RETURNING *
     `;
-    const res = await pool.query(query, [title, content, author, userId]);
+    const res = await pool.query(query, [title, content, author]);
     return res.rows[0];
   },
 
@@ -48,11 +47,5 @@ export const PostModel = {
     const query = `DELETE FROM posts WHERE id = $1`;
     const res = await pool.query(query, [id]);
     return (res.rowCount ?? 0) > 0;
-  },
-
-  async findByUserId(userId: number): Promise<Post[]> {
-    const query = `SELECT * FROM posts WHERE user_id = $1 ORDER BY created_at DESC`;
-    const res = await pool.query(query, [userId]);
-    return res.rows;
   },
 };

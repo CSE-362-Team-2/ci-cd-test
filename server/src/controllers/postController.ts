@@ -1,18 +1,13 @@
 import type { Context } from "hono";
 import { PostModel } from "../models/postModel.js";
 
-// CREATE: POST /api/posts - Protected (User/Admin)
+// CREATE: POST /api/posts - PUBLIC
 export const createPost = async (c: Context) => {
   try {
-    const user = c.get("user");
-    if (!user) {
-      return c.json({ errCode: 200, errMsg: "Unauthorized" }, 401);
-    }
-
     const { title, content, author } = await c.req.json();
     const cleanTitle = title?.trim() || "";
     const cleanContent = content?.trim() || "";
-    const cleanAuthor = author?.trim() || user.username || "Anonymous";
+    const cleanAuthor = author?.trim() || "Anonymous";
 
     if (!cleanTitle) {
       return c.json({ errCode: 100, errMsg: "Title is required" }, 400);
@@ -21,13 +16,7 @@ export const createPost = async (c: Context) => {
       return c.json({ errCode: 101, errMsg: "Content is required" }, 400);
     }
 
-    const newPost = await PostModel.create(
-      cleanTitle,
-      cleanContent,
-      cleanAuthor,
-      user.id
-    );
-
+    const newPost = await PostModel.create(cleanTitle, cleanContent, cleanAuthor);
     return c.json({ message: "Post created successfully", post: newPost }, 201);
   } catch (error) {
     console.error(error);
@@ -41,7 +30,7 @@ export const createPost = async (c: Context) => {
   }
 };
 
-// READ: GET /api/posts - Public
+// READ: GET /api/posts - PUBLIC
 export const getAllPosts = async (c: Context) => {
   try {
     const posts = await PostModel.findAll();
@@ -58,7 +47,7 @@ export const getAllPosts = async (c: Context) => {
   }
 };
 
-// READ: GET /api/posts/:id - Public
+// READ: GET /api/posts/:id - PUBLIC
 export const getPostById = async (c: Context) => {
   try {
     const idParam = c.req.param("id");
@@ -107,14 +96,9 @@ export const getPostById = async (c: Context) => {
   }
 };
 
-// UPDATE: PUT /api/posts/:id - Protected (Owner or Admin)
+// UPDATE: PUT /api/posts/:id - PUBLIC
 export const updatePost = async (c: Context) => {
   try {
-    const user = c.get("user");
-    if (!user) {
-      return c.json({ errCode: 200, errMsg: "Unauthorized" }, 401);
-    }
-
     const idParam = c.req.param("id");
     const id = Number(idParam);
 
@@ -151,9 +135,8 @@ export const updatePost = async (c: Context) => {
       );
     }
 
-    // Check if post exists
-    const existingPost = await PostModel.findById(id);
-    if (!existingPost) {
+    const updatedPost = await PostModel.update(id, cleanTitle, cleanContent);
+    if (!updatedPost) {
       return c.json(
         {
           errCode: 143,
@@ -163,18 +146,6 @@ export const updatePost = async (c: Context) => {
       );
     }
 
-    // Authorization: Only owner or admin can update
-    if (existingPost.user_id !== user.id && user.role !== "admin") {
-      return c.json(
-        {
-          errCode: 145,
-          errMsg: "Forbidden: You can only update your own posts",
-        },
-        403,
-      );
-    }
-
-    const updatedPost = await PostModel.update(id, cleanTitle, cleanContent);
     return c.json(
       {
         message: "Post updated successfully",
@@ -194,25 +165,9 @@ export const updatePost = async (c: Context) => {
   }
 };
 
-// DELETE: DELETE /api/posts/:id - Protected (Admin only)
+// DELETE: DELETE /api/posts/:id - PUBLIC
 export const deletePost = async (c: Context) => {
   try {
-    const user = c.get("user");
-    if (!user) {
-      return c.json({ errCode: 200, errMsg: "Unauthorized" }, 401);
-    }
-
-    // Only admin can delete
-    if (user.role !== "admin") {
-      return c.json(
-        {
-          errCode: 146,
-          errMsg: "Forbidden: Admin access required to delete posts",
-        },
-        403,
-      );
-    }
-
     const idParam = c.req.param("id");
     if (!idParam || idParam.trim() === "") {
       return c.json(

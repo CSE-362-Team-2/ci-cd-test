@@ -1,6 +1,6 @@
 import { Hono } from "hono";
-import { register, login, getMe } from "../controllers/authController.js";
-import { authMiddleware } from "../middleware/authMiddleware.js";
+import { register, login, getMe } from "../controllers/marufAuthController.js";
+import { authMiddleware } from "../middleware/marufAuthMiddleware.js";
 
 const authRoutes = new Hono();
 
