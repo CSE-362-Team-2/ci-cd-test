@@ -25,12 +25,14 @@ export const initDb = async () => {
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'Asia/Dhaka')
     );
   `;
+
   const anindyaUsersQuery = `
     CREATE TABLE IF NOT EXISTS anindya_users (
       id SERIAL PRIMARY KEY,
-      username VARCHAR(100) NOT NULL UNIQUE,
+      name VARCHAR(100) NOT NULL,
       email VARCHAR(255) NOT NULL UNIQUE,
       password VARCHAR(255) NOT NULL,
+      role VARCHAR(20) NOT NULL DEFAULT 'user' CHECK (role IN ('user', 'admin')),
       created_at TIMESTAMP WITH TIME ZONE DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'Asia/Dhaka'),
       updated_at TIMESTAMP WITH TIME ZONE DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'Asia/Dhaka')
     );
