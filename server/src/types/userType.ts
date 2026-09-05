@@ -1,3 +1,5 @@
+export type UserRole = "user" | "admin";
+
 export type User = {
   id: number;
   username: string;
@@ -24,6 +26,7 @@ export type PublicUserInfo = Omit<TwahaUser, "password">;
 
 export type JwtPayload = {
   id: number;
-  username: string;
+  name: string;
   email: string;
+  role: UserRole;
 };
