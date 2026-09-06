@@ -64,12 +64,35 @@ export const initDb = async () => {
         SELECT 1 FROM twaha_users WHERE email = 'admin@jucsef.me'
     );
   `;
+
+  const diptaUsersQuery = `
+ CREATE TABLE IF NOT EXISTS dipta_users(
+
+    id SERIAL PRIMARY KEY,
+
+    username VARCHAR(100) UNIQUE NOT NULL,
+
+    email VARCHAR(255) UNIQUE NOT NULL,
+
+    password TEXT NOT NULL,
+
+    role VARCHAR(20) DEFAULT 'user',
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
+);
+`;
+  
   try {
     await pool.query(postsQuery);
     await pool.query(anindyaUsersQuery);
     await pool.query(twahaUsersQuery);
+    await pool.query(diptaUsersQuery);
+
     console.log(
-      "Database initialized successfully (posts and anindya_users tables ready).",
+      "Database initialized successfully (posts and anindya_users , Dipta_users tables ready).",
     );
     console.log("twaha_users table created successfully");
   } catch (err) {
